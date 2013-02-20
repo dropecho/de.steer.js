@@ -43,10 +43,16 @@ Vector.prototype.LengthSQ = function() {
 	return (this.x * this.x) + (this.y * this.y);
 };
 
-Vector.prototype.Normalize = function() {	
+Vector.prototype.GetDistanceFrom = function(vec) {
+	return new Vector(this.x - vec.x,this.y - vec.y).Length();
+};
+
+Vector.prototype.Normalize = function(length) {	
 	var normalLength = (1.0 / this.Length());
 	this.x = this.x * normalLength;
 	this.y = this.y * normalLength;
+
+	this.Scale(length || 1);
 
 	return this;
 };

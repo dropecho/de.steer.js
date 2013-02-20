@@ -14,7 +14,8 @@ var KEY_ROT_RIGHT = 'Q'.charCodeAt();
 
 var updatePlayer = function(){  
   var p = $("#cube"),
-      keys = $.gameQuery.keyTracker;
+      keys = $.gameQuery.keyTracker,
+      mouse = $.gameQuery.mouseTracker;
 
   if(keys[KEY_LEFT])  { p.x(-SPEED,true); }
   if(keys[KEY_RIGHT]) { p.x(SPEED,true);  }
@@ -24,9 +25,15 @@ var updatePlayer = function(){
   //rotate
   if(keys[KEY_ROT_LEFT])  { p.rotate(SPEED,true); }
   if(keys[KEY_ROT_RIGHT]) { p.rotate(-SPEED,true);}
+
+
+  var playerPos = new Vector(p.x(),p.y());
+  var seekResult = Steering.seek(playerPos,new Vector(mouse.x,mouse.y),2);
+  console.log(seekResult);
+  p.xy(seekResult.x,seekResult.y, true);
 };
 
-var mainLoop = function(){
+var mainLoop = function(){  
   updatePlayer();
 };
 
@@ -36,7 +43,7 @@ $(document).ready(function(){
   var cube = new $.gameQuery.Animation({ imageURL: "./v1.png"});
 
   $playground
-    .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true})
+    .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true, mouseTracker: true})
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
       .addSprite('cube',{animation: cube, posx: 64, posy: 64, height:64, width: 64})
       .end()
