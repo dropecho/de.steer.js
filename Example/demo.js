@@ -26,22 +26,21 @@ var updatePlayer = function(){
   if(keys[KEY_ROT_RIGHT]) { p.rotate(-SPEED,true);}
 };
 
-
 var mainLoop = function(){
   updatePlayer();
 };
 
 $(document).ready(function(){
   var $playground = $("#demo");
-  
+
   var cube = new $.gameQuery.Animation({ imageURL: "./v1.png"});
 
   $playground
     .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true})
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
-      .addSprite('cube',{animation: cube, posx: 0, posy: 0, height:64, width: 64})
+      .addSprite('cube',{animation: cube, posx: 64, posy: 64, height:64, width: 64})
       .end()
-    .registerCallback(mainLoop, REFRESH_RATE)
+    .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();
 });
 
