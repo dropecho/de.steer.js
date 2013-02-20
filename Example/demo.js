@@ -4,33 +4,30 @@ var PG_WIDTH = 512;
 var REFRESH_RATE = 30;
 var SPEED = 5;
 
+var KEY_LEFT  = 'A'.charCodeAt();
+var KEY_RIGHT = 'D'.charCodeAt();
+var KEY_UP    = 'W'.charCodeAt();
+var KEY_DOWN  = 'S'.charCodeAt();
+
+var KEY_ROT_LEFT  = 'E'.charCodeAt();
+var KEY_ROT_RIGHT = 'Q'.charCodeAt();
+
 var updatePlayer = function(){  
-  if($.gameQuery.keyTracker[65]){ //left
-    $("#cube").x(-SPEED,true);    
-  }
-  if($.gameQuery.keyTracker[68]){ //right
-    $("#cube").x(SPEED,true);
-  }
-  if($.gameQuery.keyTracker[87]){ //up
-    $("#cube").y(-SPEED,true);    
-  }
-  if($.gameQuery.keyTracker[83]){ //down
-    $("#cube").y(SPEED,true);
-  }
+  var p = $("#cube"),
+      keys = $.gameQuery.keyTracker;
+
+  if(keys[KEY_LEFT])  { p.x(-SPEED,true); }
+  if(keys[KEY_RIGHT]) { p.x(SPEED,true);  }
+  if(keys[KEY_UP])    { p.y(-SPEED,true); }
+  if(keys[KEY_DOWN])  { p.y(SPEED,true);  }
 
   //rotate
-  if($.gameQuery.keyTracker[69]){ //down
-    $("#cube").scale(SPEED,true);
-  }
-  if($.gameQuery.keyTracker[81]){ //down
-   $("#cube").scale(-SPEED,true);
-  }  
+  if(keys[KEY_ROT_LEFT])  { p.rotate(SPEED,true); }
+  if(keys[KEY_ROT_RIGHT]) { p.rotate(-SPEED,true);}
 };
 
 
 var mainLoop = function(){
-  //console.log("test");  
-  //$("#cube").xy(1,1,true); 
   updatePlayer();
 };
 
