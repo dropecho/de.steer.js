@@ -28,7 +28,7 @@ var updatePlayer = function(){
 
 
   var playerPos = new Vector(p.x(),p.y());
-  var seekResult = Steering.seek(playerPos,new Vector(mouse.x,mouse.y),2);
+  var seekResult = Steering.flee(playerPos,new Vector(mouse.x,mouse.y),2);
   console.log(seekResult);
   p.xy(seekResult.x,seekResult.y, true);
 };
