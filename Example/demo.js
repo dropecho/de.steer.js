@@ -26,10 +26,7 @@ var updatePlayer = function(){
   if(keys[KEY_ROT_LEFT])  { p.rotate(SPEED,true); }
   if(keys[KEY_ROT_RIGHT]) { p.rotate(-SPEED,true);}
 
-
-  var playerPos = new Vector(p.x(),p.y());
-  var seekResult = Steering.flee(playerPos,new Vector(mouse.x,mouse.y),2);
-  console.log(seekResult);
+  var seekResult = Steering.flee(new Vector(p.x(),p.y()),new Vector(mouse.x,mouse.y),2);  
   p.xy(seekResult.x,seekResult.y, true);
 };
 
