@@ -26,7 +26,7 @@ var updatePlayer = function(){
   if(keys[KEY_ROT_LEFT])  { p.rotate(SPEED,true); }
   if(keys[KEY_ROT_RIGHT]) { p.rotate(-SPEED,true);}
 
-  var seekResult = DE.Steer.flee(new DE.utils.Vector(p.x(),p.y()),new DE.utils.Vector(mouse.x,mouse.y),2);  
+  var seekResult = DE.Steer.flee(new DE.Vector(p.x(),p.y()),new DE.Vector(mouse.x,mouse.y),2);  
   p.xy(seekResult.x,seekResult.y, true);
 };
 

@@ -1,8 +1,6 @@
 var DE = DE || {};
-DE.utils = DE.utils || {};
 
-DE.utils.Vector = function(){
-
+DE.Vector = function(){
 	function Vector(x,y){
 		if(typeof x === 'object'){
 			this.x = x.x || 0;
