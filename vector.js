@@ -2,18 +2,19 @@ var DE = DE || {};
 
 DE.Vector = function(){
 	function Vector(x,y){
-		if(typeof x === 'object'){
-			this.x = x.x || 0;
-			this.y = x.y || 0;
+		if(typeof DE.unwrap(x) === 'object'){			
+			this.x = DE.unwrap(x.x) || 0;
+			this.y = DE.unwrap(x.y) || 0;
 		} else {
-			this.x = x || 0;
-			this.y = y || 0;
+			this.x = DE.unwrap(x) || 0;
+			this.y = DE.unwrap(y) || 0;
 		}
 
 		return this;
 	};
 
 	Vector.prototype.Scale = function(scale){
+		scale = DE.unwrap(scale) || 1;
 		this.x *= scale;
 		this.y *= scale;
 
@@ -21,6 +22,7 @@ DE.Vector = function(){
 	};
 
 	Vector.prototype.Add = function(vec){
+		vec = DE.unwrap(vec);
 		this.x += vec.x;
 		this.y += vec.y;
 
@@ -28,6 +30,7 @@ DE.Vector = function(){
 	};
 
 	Vector.prototype.Sub = function(vec){
+		vec = DE.unwrap(vec);
 		this.x -= vec.x;
 		this.y -= vec.y;
 
@@ -35,6 +38,7 @@ DE.Vector = function(){
 	}
 
 	Vector.prototype.Dot = function(vec){
+		vec = DE.unwrap(vec);
 		return ((this.x * vec.x) + (this.y * vec.y));
 	}
 
@@ -47,10 +51,12 @@ DE.Vector = function(){
 	};
 
 	Vector.prototype.GetDistanceFrom = function(vec) {
+		vec = DE.unwrap(vec);
 		return new Vector(this.x - vec.x,this.y - vec.y).Length();
 	};
 
 	Vector.prototype.Normalize = function(length) {	
+		length = DE.unwrap(length);
 		var normalLength = (1.0 / this.Length());
 		this.x = this.x * normalLength;
 		this.y = this.y * normalLength;
@@ -62,3 +68,7 @@ DE.Vector = function(){
 
 	return Vector;
 }();
+
+DE.Vec2d = function(x,y){
+	return new DE.Vector(x,y);
+}

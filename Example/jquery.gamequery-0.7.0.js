@@ -1559,9 +1559,12 @@
          * This is a non-destructive call when called with a parameter. Without parameter it IS a destructive call.
          */
         xyz: function(x, y, z, relative) {
-             if (x === undefined) {
+             if (x === undefined) { //calling get
                  return this.getxyz();
-             } else {
+             } else if(typeof(x) === 'object'){ //passed in a vector
+                relative = y; //use y instead of relative cause its the second param.
+                return this.setxyz(x, relative); 
+             } else { //setting with ints
                  return this.setxyz({x: x, y: y, z: z}, relative);
              }
         },
@@ -1601,6 +1604,9 @@
              if (x === undefined) {
                  // we return the z too since it doesn't cost anything
                  return this.getxyz();
+             } else if(typeof(x) === 'object'){ //passed in a vector
+                relative = y; //use y instead of relative cause its the second param.
+                return this.setxyz(x, relative);              
              } else {
                  return this.setxyz({x: x, y: y}, relative);
              }
