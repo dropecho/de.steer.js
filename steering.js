@@ -8,7 +8,7 @@ DE.Steer = function(){
 	};
 
 	Steering.prototype.flee = function(pos,target,speed,fleeRadius) {
-		var shouldFlee = (fleeRadius === undefined || fleeRadius == -1 || target.GetDistanceFrom(pos) <= fleeRadius);
+		var shouldFlee = (fleeRadius === undefined || fleeRadius === -1 || target.GetDistanceFrom(pos) <= fleeRadius);
 		
 		var flee = pos.Sub(target).Normalize(speed);
 		return shouldFlee ? flee : DE.Vec2d(0,0);

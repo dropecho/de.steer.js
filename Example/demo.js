@@ -46,7 +46,7 @@ var updatePlayer = function(){
       enemyPos = DE.Vec2d(enemy.xy());
   
   
-  var flee = DE.Steer.flee(playerPos,enemyPos,1,64);  
+  var flee = DE.Steer.flee(playerPos,enemyPos,1,64);    
   player.xy(flee, true);
 }
 
