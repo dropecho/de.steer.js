@@ -2,7 +2,7 @@
 var PG_HEIGHT = 512;
 var PG_WIDTH = 512;
 var REFRESH_RATE = 0;
-var SPEED = 5;
+var SPEED = 10;
 
 var KEY_LEFT  = 'A'.charCodeAt();
 var KEY_RIGHT = 'D'.charCodeAt();
@@ -57,8 +57,8 @@ var updateEnemy = function(){
       //playerPos = DE.Vec2d(64,64),
       enemyPos = DE.Vec2d(enemy.xy());
 
-  var seek = DE.Steer.arrive(enemyPos,playerPos,2);
-  enemy.xy(seek, true);
+  var steering = DE.Steer.pursuit(enemyPos,playerPos,10,player.rotate());
+  enemy.xy(steering, true);
 };
 
 //Main game loop.

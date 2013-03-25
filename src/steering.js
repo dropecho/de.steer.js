@@ -10,32 +10,38 @@ DE.Steer = function(){
 		// body...
 	};
 
-	Steering.prototype.arrive = function(pos,target,speed) {		
+	Steering.prototype.arrive = function(pos,target,speed,decelForce) {		
+		decelForce = decelForce || 5;
 		var distToTarget = pos.GetDistanceFrom(target);
-		if(distToTarget <= (speed * 40)){			
-			if(distToTarget < 1){
-				return DE.Vec2d(0,0);
-			}
-			var scaledSpeed = speed * ((1/(distToTarget)) - 10);			
-			var newSpeed = DE.clamp(scaledSpeed,0,speed);
-			console.log(newSpeed);
-			return this.seek(pos,target,newSpeed);
+		
+		if(distToTarget > 0){	
+			var arriveSpeed = distToTarget/decelForce; //Tweak wanted velocity to distance from target.
+			arriveSpeed = DE.Math.Clamp(arriveSpeed,0,speed); //Clamp to maximum speed.
+			return target.Sub(pos).Normalize(arriveSpeed); //Get seek vector, scale to calculated speed.
 		}
-		return this.seek(pos,target,speed);
+
+		return DE.Vec2d(0,0); //dont go nowhere.
 	};	
 
 	Steering.prototype.cohese = function(first_argument) {
 		// body...
 	};
 
-	Steering.prototype.evade = function(first_argument) {
-		// body...
+	Steering.prototype.evade = function(pos,target,speed,targetHeadingDeg, targetCurrentSpeed) {
+		var toTarget = DE.Vector.Sub(target,pos);
+		var heading = DE.HeadingVec(targetHeadingDeg);			
+		var targetCurrentSpeed = targetCurrentSpeed || 60;
+
+		var lookAhead = toTarget.Length() / (speed + targetCurrentSpeed);		
+		var estimatedTargetPos = DE.Vector.Add(target,heading.Normalize(lookAhead));
+		
+		return this.flee(pos,estimatedTargetPos);
 	};
 
 	Steering.prototype.flee = function(pos,target,speed,fleeRadius) {
 		var shouldFlee = (fleeRadius === undefined || fleeRadius === -1 || target.GetDistanceFrom(pos) <= fleeRadius);
 		
-		var flee = pos.Sub(target).Normalize(speed);
+		var flee = pos.Sub(target).Normalize(speed); //Get toTarget vec, scale to max speed.
 		return shouldFlee ? flee : DE.Vec2d(0,0);
 	};
 
@@ -51,12 +57,19 @@ DE.Steer = function(){
 		// body...
 	};
 
-	Steering.prototype.pursuit = function(first_argument) {
-		// body...
+	Steering.prototype.pursuit = function(pos,target,speed,targetHeadingDeg, targetCurrentSpeed) {
+		var toTarget = DE.Vector.Sub(target,pos);
+		var heading = DE.HeadingVec(targetHeadingDeg);			
+		var targetCurrentSpeed = targetCurrentSpeed || 60;
+
+		var lookAhead = toTarget.Length() / (speed + targetCurrentSpeed);		
+		var estimatedTargetPos = DE.Vector.Add(target,heading.Normalize(lookAhead));
+		
+		return this.seek(pos,estimatedTargetPos);
 	};
 
 	Steering.prototype.seek = function(pos,target,speed) {				
-		return target.Sub(pos).Normalize(speed);
+		return DE.Vector.Sub(target,pos).Normalize(speed);
 	};
 
 	Steering.prototype.seperation = function(first_argument) {
