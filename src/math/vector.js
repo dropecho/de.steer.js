@@ -66,6 +66,10 @@ DE.Vector = function(){
 		return this;
 	};
 
+	Vector.prototype.Perp = function() {
+		return DE.Vec2d(this.y,-this.x);
+	};
+
 	return Vector;
 }();
 

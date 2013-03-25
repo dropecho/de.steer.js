@@ -57,7 +57,7 @@ var updateEnemy = function(){
       //playerPos = DE.Vec2d(64,64),
       enemyPos = DE.Vec2d(enemy.xy());
 
-  var steering = DE.Steer.pursuit(enemyPos,playerPos,10,player.rotate());
+  var steering = DE.Steer.arrive(enemyPos,playerPos,10,10);
   enemy.xy(steering, true);
 };
 
