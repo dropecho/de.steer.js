@@ -1,6 +1,5 @@
 var DE = DE || {};
 DE.Steer = function(){
-
 	function Steering(){};
 
 	/**
@@ -11,8 +10,18 @@ DE.Steer = function(){
 		// body...
 	};
 
-	Steering.prototype.arrive = function(first_argument) {
-		// body...
+	Steering.prototype.arrive = function(pos,target,speed) {		
+		var distToTarget = pos.GetDistanceFrom(target);
+		if(distToTarget <= (speed * 40)){			
+			if(distToTarget < 1){
+				return DE.Vec2d(0,0);
+			}
+			var scaledSpeed = speed * ((1/(distToTarget)) - 10);			
+			var newSpeed = DE.clamp(scaledSpeed,0,speed);
+			console.log(newSpeed);
+			return this.seek(pos,target,newSpeed);
+		}
+		return this.seek(pos,target,speed);
 	};	
 
 	Steering.prototype.cohese = function(first_argument) {

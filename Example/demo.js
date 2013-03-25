@@ -46,17 +46,18 @@ var updatePlayer = function(){
       enemyPos = DE.Vec2d(enemy.xy());
   
   
-  var flee = DE.Steer.flee(playerPos,enemyPos,1,64);    
-  player.xy(flee, true);
+  //var flee = DE.Steer.flee(playerPos,enemyPos,1,64);
+  //player.xy(flee, true);
 }
 
 var updateEnemy = function(){
   var player = $("#cube"),
       enemy = $("#cube2"),
       playerPos = DE.Vec2d(player.xy()),
+      //playerPos = DE.Vec2d(64,64),
       enemyPos = DE.Vec2d(enemy.xy());
 
-  var seek = DE.Steer.seek(enemyPos,playerPos,1);  
+  var seek = DE.Steer.arrive(enemyPos,playerPos,2);
   enemy.xy(seek, true);
 };
 
