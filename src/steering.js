@@ -93,7 +93,7 @@ DE.Steer = function(){
 	    {        
 	        var awayFromNeighbor = DE.Vector.Sub(pos,neighborPositions[i]);
 	        var distanceToNeighbor = awayFromNeighbor.Length();
-	        SteeringForce.Add(awayFromNeighbor.Normalize(1/distanceToNeighbor));    
+	        SteeringForce.Add(awayFromNeighbor.Normalize(64/distanceToNeighbor));    
 	    }
 
 	    return SteeringForce;
