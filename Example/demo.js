@@ -53,6 +53,9 @@ var updatePlayer = function(){
   //player.xy(flee, true);
 }
 
+var enemyWander = DE.Vec2d(0,0);
+var enemyHeading = DE.Vec2d(1,0);
+
 var updateEnemy = function(){
   var player = $("#cube"),
       enemy = $("#cube2"),
@@ -60,10 +63,12 @@ var updateEnemy = function(){
       //playerPos = DE.Vec2d(64,64),
       enemyPos = DE.Vec2d(enemy.xy());
 
-  var steering = DE.Steer.arrive(enemyPos,playerPos,5,10);
-  var rot = DE.Vector.HeadingToDeg(steering);
-  //console.log(rot);
-  enemy.rotate(rot);
+  
+  enemyHeading = DE.HeadingVec(enemy.rotate());
+  
+  //var steering = DE.Steer.wander(enemyPos,enemyWander,enemyHeading);
+  var steering = DE.Steer.arrive(enemyPos,playerPos,8,10);
+  enemy.rotate(DE.Vector.HeadingToDeg(steering));
   enemy.xy(steering, true);
 };
 
@@ -81,8 +86,8 @@ $(document).ready(function(){
 
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
       .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE, height: TILE_SIZE, sizex: TILE_COUNT, sizey: TILE_COUNT})
-      .addSprite('cube',{animation: redCube, posx: 64, posy: 64, height:TILE_SIZE, width: TILE_SIZE})
-      .addSprite('cube2',{animation: blueCube, posx: 64, posy: 128, height:TILE_SIZE, width: TILE_SIZE})
+      .addSprite('cube',{animation: redCube, posx: 512, posy: 512, height:TILE_SIZE, width: TILE_SIZE})
+      .addSprite('cube2',{animation: blueCube, posx: 512, posy: 512, height:TILE_SIZE, width: TILE_SIZE})
       .end()
     .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();

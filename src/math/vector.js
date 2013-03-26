@@ -104,6 +104,14 @@ DE.Vector.Sub = function(vec1,vec2){
 	return DE.Vec2d(x,y);
 };
 
+DE.Vector.HeadingToDeg = function(HeadingVec){
+	var world = DE.Vec2d(1,0);	
+	var blah = DE.Vec2d(HeadingVec.x,HeadingVec.y);
+	var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(blah.Normalize())));	
+	if(HeadingVec.y < 0){ degrees = 360 - degrees}; //dot product returns 0 - pi, fix over 180 problems.
+	return degrees;
+};
+
 DE.Vector.WorldToLocal = function(vec,HeadingVec){
 	//heading vec is used as X axis in local coords
 	//its perpendicular is used as the orthagonal y axis in the local coords.
@@ -119,15 +127,8 @@ DE.Vector.WorldToLocal = function(vec,HeadingVec){
 	return DE.Vec2d(x,y);
 };
 
-DE.Vector.HeadingToDeg = function(HeadingVec){
-	var world = DE.Vec2d(1,0);	
-	var blah = DE.Vec2d(HeadingVec.x,HeadingVec.y);
-	var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(blah.Normalize())));	
-	if(HeadingVec.y < 0){ degrees = 360 - degrees}; //dot product returns 0 - pi, fix over 180 problems.
-	return degrees;
-};
-
-DE.Vector.LocalToWorld = function(vec,HeadingVec){	
+DE.Vector.LocalToWorld = function(vec,HeadingVec,pos){	
+	var world = DE.Vec2d(1,0);
 	var degrees = DE.Vector.HeadingToDeg(HeadingVec);
 	
 	var inverse = DE.Vector.WorldToLocal(DE.HeadingVec(-degrees),world);	
@@ -137,7 +138,7 @@ DE.Vector.LocalToWorld = function(vec,HeadingVec){
 	var x = DE.Math.CleanFloat((vec.x * mat[0][0]) + (vec.y * mat[0][1]));
 	var y = DE.Math.CleanFloat((vec.x * mat[1][0]) + (vec.y * mat[1][1]));
 
-	return DE.Vec2d(x,y);
+	return DE.Vec2d(x,y).Add(pos);
 };
 
 DE.HeadingToDegTest = function(){

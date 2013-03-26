@@ -10,7 +10,7 @@ DE.Math.Clamp = function(number,min,max){
 
 DE.Math.Rand = function(min,max){
 	return min !== undefined 
-		? DE.clamp(Math.random(),min,max)
+		? DE.Math.Clamp(Math.random()*max,min,max)
 		: Math.random();
 }
 
