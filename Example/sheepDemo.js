@@ -35,9 +35,7 @@ var handlePlayerKeys = function(){
 
   var currentRot = DE.HeadingVec(player.rotate());
   var trans = DE.Vector.WorldToLocal(trans,currentRot);
-  player.xy(trans,true);
-
-  
+  player.xy(trans,true);  
 };
 
 
@@ -65,15 +63,21 @@ $(document).ready(function(){
     var player = $("#cube"),
         playerPos = DE.Vec2d(player.xy());
 
+    var sheepPositions = [];
+    for (var i = 0; i < sheep.length; i++) {
+      sheepPositions.push(DE.Vec2d(sheep[i].xy()));
+    };   
+
     for (var i = sheep.length - 1; i >= 0; i--) {      
       var sheepPos = DE.Vec2d(sheep[i].xy());
       var sheepHeading = DE.HeadingVec(sheep[i].rotate());
          
-      var steering = DE.Steer.flee(sheepPos,playerPos,10,128);
+      var neighbors = DE.Util.RemoveElement(sheepPositions,i);      
+      //var steering = DE.Steer.flee(sheepPos,playerPos,10,128);
+      var steering = DE.Steer.cohese(sheepPos,neighbors);
       sheep[i].rotate(DE.Vector.HeadingToDeg(steering));
       sheep[i].xy(steering, true);  
-    };
-    
+    };    
   };
 
   //Main game loop.

@@ -23,8 +23,23 @@ DE.Steer = function(){
 		return DE.Vec2d(0,0); //dont go nowhere.
 	};	
 
-	Steering.prototype.cohese = function(first_argument) {
-		// body...
+	Steering.prototype.cohese = function(pos,neighborPositions) {
+		var centerOfMass = DE.Vec2d(0,0),
+			steeringForce = DE.Vec2d(0,0);
+
+		var neighborCount = neighborPositions.length;
+
+		for(var i = 0; i < neighborCount; i++){
+			console.log(neighborPositions[i]);
+			centerOfMass.Add(neighborPositions[i]);
+		}
+
+		if(neighborCount > 0){
+			centerOfMass.Normalize(1/neighborCount);			
+			steeringForce = this.seek(pos,centerOfMass);
+		}
+
+		return steeringForce;
 	};
 
 	Steering.prototype.evade = function(pos,target,speed,targetHeadingDeg, targetCurrentSpeed) {
