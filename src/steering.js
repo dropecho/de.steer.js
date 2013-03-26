@@ -29,8 +29,7 @@ DE.Steer = function(){
 
 		var neighborCount = neighborPositions.length;
 
-		for(var i = 0; i < neighborCount; i++){
-			console.log(neighborPositions[i]);
+		for(var i = 0; i < neighborCount; i++){			
 			centerOfMass.Add(neighborPositions[i]);
 		}
 

@@ -73,8 +73,8 @@ $(document).ready(function(){
       var sheepHeading = DE.HeadingVec(sheep[i].rotate());
          
       var neighbors = DE.Util.RemoveElement(sheepPositions,i);      
-      //var steering = DE.Steer.flee(sheepPos,playerPos,10,128);
-      var steering = DE.Steer.cohese(sheepPos,neighbors);
+      var steering = DE.Steer.flee(sheepPos,playerPos,10,128);
+      steering.Add(DE.Steer.cohese(sheepPos,neighbors));
       sheep[i].rotate(DE.Vector.HeadingToDeg(steering));
       sheep[i].xy(steering, true);  
     };    
