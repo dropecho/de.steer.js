@@ -67,7 +67,7 @@ var updateEnemy = function(){
   enemyHeading = DE.HeadingVec(enemy.rotate());
   
   //var steering = DE.Steer.wander(enemyPos,enemyWander,enemyHeading);
-  var steering = DE.Steer.arrive(enemyPos,playerPos,8,10);
+  var steering = DE.Steer.arrive(enemyPos,playerPos,10);
   enemy.rotate(DE.Vector.HeadingToDeg(steering));
   enemy.xy(steering, true);
 };

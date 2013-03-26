@@ -24,21 +24,19 @@ DE.Steer = function(){
 	};	
 
 	Steering.prototype.cohese = function(pos,neighborPositions) {
-		var centerOfMass = DE.Vec2d(0,0),
-			steeringForce = DE.Vec2d(0,0);
-
+		var centerOfMass = DE.Vec2d(0,0);
 		var neighborCount = neighborPositions.length;
 
 		for(var i = 0; i < neighborCount; i++){			
 			centerOfMass.Add(neighborPositions[i]);
 		}
 
-		if(neighborCount > 0){
-			centerOfMass.Normalize(1/neighborCount);			
-			steeringForce = this.seek(pos,centerOfMass);
+		if(neighborCount > 0){					
+			centerOfMass.Scale(1/neighborCount);
+			return this.seek(pos,centerOfMass);			
 		}
 
-		return steeringForce;
+		return DE.Vec2d(0,0);
 	};
 
 	Steering.prototype.evade = function(pos,target,speed,targetHeadingDeg, targetCurrentSpeed) {
@@ -55,7 +53,7 @@ DE.Steer = function(){
 	Steering.prototype.flee = function(pos,target,speed,fleeRadius) {
 		var shouldFlee = (fleeRadius === undefined || fleeRadius === -1 || target.GetDistanceFrom(pos) <= fleeRadius);
 		
-		var flee = pos.Sub(target).Normalize(speed); //Get toTarget vec, scale to max speed.
+		var flee = DE.Vector.Sub(pos,target).Normalize(speed); //Get toTarget vec, scale to max speed.
 		return shouldFlee ? flee : DE.Vec2d(0,0);
 	};
 
@@ -86,8 +84,20 @@ DE.Steer = function(){
 		return DE.Vector.Sub(target,pos).Normalize(speed);
 	};
 
-	Steering.prototype.seperation = function(first_argument) {
-		// body...
+	Steering.prototype.seperation = function(pos,neighborPositions) {
+	
+	    var SteeringForce = DE.Vec2d(0,0);
+	    var neighborCount = neighborPositions.length;
+	    
+	    for(var i = 0; i < neighborCount; i++)
+	    {        
+	        var awayFromNeighbor = DE.Vector.Sub(pos,neighborPositions[i]);
+	        var distanceToNeighbor = awayFromNeighbor.Length();
+	        SteeringForce.Add(awayFromNeighbor.Normalize(1/distanceToNeighbor));    
+	    }
+
+	    return SteeringForce;
+
 	};	
 
 	Steering.prototype.wander = function(pos,target, HeadingVec) {
