@@ -23,7 +23,7 @@ DE.Steer = function(){
 		return DE.Vec2d(0,0); //dont go nowhere.
 	};	
 
-	Steering.prototype.cohese = function(pos,neighborPositions) {
+	Steering.prototype.cohese = function(pos,neighborPositions,speed) {
 		var centerOfMass = DE.Vec2d(0,0);
 		var neighborCount = neighborPositions.length;
 
@@ -33,7 +33,7 @@ DE.Steer = function(){
 
 		if(neighborCount > 0){					
 			centerOfMass.Scale(1/neighborCount);
-			return this.seek(pos,centerOfMass);			
+			return this.seek(pos,centerOfMass,speed);			
 		}
 
 		return DE.Vec2d(0,0);
