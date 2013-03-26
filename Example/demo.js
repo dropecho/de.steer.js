@@ -1,6 +1,6 @@
 // Config
-var PG_HEIGHT = 512;
-var PG_WIDTH = 512;
+var PG_HEIGHT = 1024;
+var PG_WIDTH = 1600;
 var REFRESH_RATE = 0;
 var SPEED = 10;
 
@@ -13,7 +13,7 @@ var KEY_ROT_LEFT  = 'E'.charCodeAt();
 var KEY_ROT_RIGHT = 'Q'.charCodeAt();
 
 var TILE_SIZE = 64;
-var TILE_COUNT = PG_HEIGHT / TILE_SIZE;
+var TILE_COUNT = PG_WIDTH / TILE_SIZE;
 
 var redCube = new $.gameQuery.Animation({ imageURL: "./v1.png"});  //media
 var blueCube = new $.gameQuery.Animation({ imageURL: "./v2.png"});  //media
@@ -26,15 +26,18 @@ var handlePlayerKeys = function(){
 
   var trans = DE.Vec2d();
   
-  if(keys[KEY_LEFT])  { trans.x -= SPEED; }
-  if(keys[KEY_RIGHT]) { trans.x += SPEED; }
-  if(keys[KEY_UP])    { trans.y -= SPEED; }
-  if(keys[KEY_DOWN])  { trans.y += SPEED; }
+  //if(keys[KEY_LEFT])  { trans.y += SPEED; }
+  //if(keys[KEY_RIGHT]) { trans.y -= SPEED; }
+  if(keys[KEY_UP])    { trans.x += SPEED; }
+  if(keys[KEY_DOWN])  { trans.x -= SPEED; }
+  if(keys[KEY_LEFT])  { player.rotate(-SPEED,true); }
+  if(keys[KEY_RIGHT]) { player.rotate(SPEED,true);}  
 
+  var currentRot = DE.HeadingVec(player.rotate());
+  var trans = DE.Vector.WorldToLocal(trans,currentRot);
   player.xy(trans,true);
 
-  if(keys[KEY_ROT_LEFT])  { player.rotate(SPEED,true); }
-  if(keys[KEY_ROT_RIGHT]) { player.rotate(-SPEED,true);}  
+  
 };
 
 var updatePlayer = function(){
@@ -57,7 +60,10 @@ var updateEnemy = function(){
       //playerPos = DE.Vec2d(64,64),
       enemyPos = DE.Vec2d(enemy.xy());
 
-  var steering = DE.Steer.arrive(enemyPos,playerPos,10,10);
+  var steering = DE.Steer.arrive(enemyPos,playerPos,5,10);
+  var rot = DE.Vector.HeadingToDeg(steering);
+  //console.log(rot);
+  enemy.rotate(rot);
   enemy.xy(steering, true);
 };
 

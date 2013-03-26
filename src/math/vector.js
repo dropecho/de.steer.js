@@ -67,7 +67,7 @@ DE.Vector = function(){
 	};
 
 	Vector.prototype.Perp = function() {
-		return DE.Vec2d(this.y,-this.x);
+		return DE.Vec2d(-this.y,this.x);
 	};
 
 	return Vector;
@@ -104,3 +104,66 @@ DE.Vector.Sub = function(vec1,vec2){
 	return DE.Vec2d(x,y);
 };
 
+DE.Vector.WorldToLocal = function(vec,HeadingVec){
+	//heading vec is used as X axis in local coords
+	//its perpendicular is used as the orthagonal y axis in the local coords.
+	//[x1,y1]
+	//[x2,y2]
+	var perp = HeadingVec.Perp();
+
+	var mat = [[HeadingVec.x,perp.x],[HeadingVec.y,perp.y]];
+	
+	var x = (vec.x * mat[0][0]) + (vec.y * mat[0][1]);
+	var y = (vec.x * mat[1][0]) + (vec.y * mat[1][1]);
+
+	return DE.Vec2d(x,y);
+};
+
+DE.Vector.HeadingToDeg = function(HeadingVec){
+	var world = DE.Vec2d(1,0);	
+	var blah = DE.Vec2d(HeadingVec.x,HeadingVec.y);
+	var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(blah.Normalize())));	
+	if(HeadingVec.y < 0){ degrees = 360 - degrees}; //dot product returns 0 - pi, fix over 180 problems.
+	return degrees;
+};
+
+DE.Vector.LocalToWorld = function(vec,HeadingVec){	
+	var degrees = DE.Vector.HeadingToDeg(HeadingVec);
+	
+	var inverse = DE.Vector.WorldToLocal(DE.HeadingVec(-degrees),world);	
+	var perp = inverse.Perp();
+
+	var mat = [[inverse.x,perp.x],[inverse.y,perp.y]];
+	var x = DE.Math.CleanFloat((vec.x * mat[0][0]) + (vec.y * mat[0][1]));
+	var y = DE.Math.CleanFloat((vec.x * mat[1][0]) + (vec.y * mat[1][1]));
+
+	return DE.Vec2d(x,y);
+};
+
+DE.HeadingToDegTest = function(){
+	for (var i = 0; i < 360; i++){
+		var x = DE.Math.CleanFloat(Math.cos(DE.Math.DegToRad(i)));
+		var y = DE.Math.CleanFloat(Math.sin(DE.Math.DegToRad(i)));
+		var heading = DE.Vec2d(x,y);
+		var deg = DE.Vector.HeadingToDeg(heading);
+		if(deg < i - 0.0001 || deg > i + 0.0001){
+			console.log("heading:",heading, "got:",deg," Expected:", i);
+		}
+	}
+};
+
+DE.VecTest = function(){
+	var test = DE.Vec2d(1,0);
+	for (var i = 0; i <= 360; i+=5) {
+		var local = DE.Vector.WorldToLocal(test,DE.HeadingVec(i));
+		var world = DE.Vector.LocalToWorld(local,DE.HeadingVec(i));
+
+		if(world.x < test.x - .0001 || world.x > test.x + .0001){
+			console.log("AT: ",i, " Expected x to be:",test.x, "  Got:", world.x);
+		}
+
+		if(world.y < test.y - .0001 || world.y > test.y + .0001){
+			console.log("AT: ",i, " Expected x to be:",test.y, "  Got:", world.y);
+		}
+	}
+};

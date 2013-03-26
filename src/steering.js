@@ -76,7 +76,7 @@ DE.Steer = function(){
 		// body...
 	};	
 
-	Steering.prototype.wander = function(pos,target) {
+	Steering.prototype.wander = function(pos,target, HeadingVec) {
 		var radius = 10;
 		var dist = 10;
 		var jitter = 10;
@@ -87,9 +87,9 @@ DE.Steer = function(){
 		target.Add(DE.Vec2d(wanderX,wanderY)).Normalize(radius); //Add jitter and scale to radius.
 		target.Add(DE.Vec2d(dist,0)); //Move X units in front of pos in local coords.
 
-		//var targetWorld = DE.Vector.LocalToWorld(target,);
+		var targetWorld = DE.Vector.LocalToWorld(target,HeadingVec);
 
-		//return DE.Vector.Sub(targetWorld,pos);
+		return DE.Vector.Sub(targetWorld,pos);
 	};
 
 	return new Steering();
