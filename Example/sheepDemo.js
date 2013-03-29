@@ -1,6 +1,6 @@
 // Config
-var PG_HEIGHT = 1024;
-var PG_WIDTH = 1600;
+var PG_HEIGHT = 512;
+var PG_WIDTH = 512;
 var REFRESH_RATE = 0;
 var SPEED = 10;
 
@@ -12,12 +12,12 @@ var KEY_DOWN  = 'S'.charCodeAt();
 var KEY_ROT_LEFT  = 'E'.charCodeAt();
 var KEY_ROT_RIGHT = 'Q'.charCodeAt();
 
-var TILE_SIZE = 64;
+var TILE_SIZE = 16;
 var TILE_COUNT = PG_WIDTH / TILE_SIZE;
 
-var redCube = new $.gameQuery.Animation({ imageURL: "./v1.png"});  //media
-var blueCube = new $.gameQuery.Animation({ imageURL: "./v2.png"});  //media
-var grid = new $.gameQuery.Animation({ imageURL: "./grid2.png"});  //media
+var redCube = new $.gameQuery.Animation({ imageURL: "./v1-small.png"});  //media
+var blueCube = new $.gameQuery.Animation({ imageURL: "./v2-small.png"});  //media
+var grid = new $.gameQuery.Animation({ imageURL: "./grid-small.png"});  //media
 
 //helpers
 var handlePlayerKeys = function(){
@@ -46,7 +46,7 @@ $(document).ready(function(){
   $playground.playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true, mouseTracker: true});
   var actors = $playground.addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH});
   actors.addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE, height: TILE_SIZE, sizex: TILE_COUNT, sizey: TILE_COUNT});
-  actors.addSprite('cube',{animation: redCube, posx: 512, posy: 512, height:TILE_SIZE, width: TILE_SIZE}); //Add player.  
+  actors.addSprite('cube',{animation: redCube, posx: 128, posy: 128, height:TILE_SIZE, width: TILE_SIZE}); //Add player.  
 
   var updatePlayer = function(){
     handlePlayerKeys();
@@ -73,7 +73,7 @@ $(document).ready(function(){
       var sheepHeading = DE.HeadingVec(sheep[i].rotate());
          
       var neighbors = DE.Util.RemoveElement(sheepPositions,i);      
-      var steering = DE.Steer.flee(sheepPos,playerPos,10,128);
+      var steering = DE.Steer.flee(sheepPos,playerPos,10,32);
       steering.Add(DE.Steer.cohese(sheepPos,neighbors));
       sheep[i].rotate(DE.Vector.HeadingToDeg(steering));
       sheep[i].xy(steering, true);  

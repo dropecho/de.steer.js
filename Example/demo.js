@@ -12,12 +12,13 @@ var KEY_DOWN  = 'S'.charCodeAt();
 var KEY_ROT_LEFT  = 'E'.charCodeAt();
 var KEY_ROT_RIGHT = 'Q'.charCodeAt();
 
-var TILE_SIZE = 64;
+var TILE_SIZE = 16;
+var SPRITE_SIZE = 16;
 var TILE_COUNT = PG_WIDTH / TILE_SIZE;
 
-var redCube = new $.gameQuery.Animation({ imageURL: "./v1.png"});  //media
-var blueCube = new $.gameQuery.Animation({ imageURL: "./v2.png"});  //media
-var grid = new $.gameQuery.Animation({ imageURL: "./grid2.png"});  //media
+var redCube = new $.gameQuery.Animation({ imageURL: "./v1-small.png"});  //media
+var blueCube = new $.gameQuery.Animation({ imageURL: "./v2-small.png"});  //media
+var grid = new $.gameQuery.Animation({ imageURL: "./grid-small.png"});  //media
 
 //helpers
 var handlePlayerKeys = function(){
@@ -86,8 +87,8 @@ $(document).ready(function(){
 
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
       .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE, height: TILE_SIZE, sizex: TILE_COUNT, sizey: TILE_COUNT})
-      .addSprite('cube',{animation: redCube, posx: 512, posy: 512, height:TILE_SIZE, width: TILE_SIZE})
-      .addSprite('cube2',{animation: blueCube, posx: 512, posy: 512, height:TILE_SIZE, width: TILE_SIZE})
+      .addSprite('cube',{animation: redCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
+      .addSprite('cube2',{animation: blueCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
       .end()
     .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();
