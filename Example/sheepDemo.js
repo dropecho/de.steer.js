@@ -1,6 +1,6 @@
 // Config
-var PG_HEIGHT = 512;
-var PG_WIDTH = 512;
+var PG_HEIGHT = 640;
+var PG_WIDTH = 800;
 var REFRESH_RATE = 0;
 var SPEED = 10;
 
@@ -53,7 +53,7 @@ $(document).ready(function(){
   }
 
   var sheep = [];
-  for( var i = 0; i < 10; i++){
+  for( var i = 0; i < 3; i++){
     var pos = DE.Vec2d(DE.Math.Rand(0,PG_WIDTH),DE.Math.Rand(0,PG_HEIGHT));
     actors.addSprite('sheep' + i,{animation: blueCube, posx: pos.x, posy: pos.y, height:TILE_SIZE, width: TILE_SIZE});
     sheep.push($("#sheep"+i));
@@ -72,11 +72,14 @@ $(document).ready(function(){
       var sheepPos = DE.Vec2d(sheep[i].xy());
       var sheepHeading = DE.HeadingVec(sheep[i].rotate());
          
-      var neighbors = DE.Util.RemoveElement(sheepPositions,i);      
+      var neighbors = DE.Util.RemoveElement(sheepPositions,i);            
+      
       var steering = DE.Steer.flee(sheepPos,playerPos,10,32);
-      steering.Add(DE.Steer.cohese(sheepPos,neighbors));
+      steering.Add(DE.Steer.cohese(sheepPos,neighbors,10));
+      steering.Add(DE.Steer.seperation(sheepPos,neighbors));
+      
       sheep[i].rotate(DE.Vector.HeadingToDeg(steering));
-      sheep[i].xy(steering, true);  
+      sheep[i].xy(steering, true);        
     };    
   };
 
