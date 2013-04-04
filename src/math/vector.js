@@ -50,18 +50,20 @@ DE.Vector = function(){
 		return (this.x * this.x) + (this.y * this.y);
 	};
 
-	Vector.prototype.GetDistanceFrom = function(vec) {
+	Vector.prototype.DistanceFrom = function(vec) {
 		vec = DE.Util.Unwrap(vec);
 		return new Vector(this.x - vec.x,this.y - vec.y).Length();
 	};
 
-	Vector.prototype.Normalize = function(length) {	
-		length = DE.Util.Unwrap(length);
-		var normalLength = (1.0 / this.Length());
+	Vector.prototype.Normalize = function(scalar) {	
+		var length = this.Length();
+		var normalLength = length != 0 ? (1.0 / length) : 1;
 		this.x = this.x * normalLength;
-		this.y = this.y * normalLength;
+		this.y = this.y * normalLength;	
 
-		this.Scale(length || 1);
+		if(scalar > 0){
+			this.Scale(scalar);
+		}
 
 		return this;
 	};
@@ -90,25 +92,42 @@ DE.Vector.Add = function(vec1,vec2){
 	vec1 = DE.Util.Unwrap(vec1);
 	vec2 = DE.Util.Unwrap(vec2);
 
-	var x = vec1.x + vec2.x;
-	var y = vec1.y + vec2.y;
-	return DE.Vec2d(x,y);
+	return DE.Vec2d((vec1.x + vec2.x), (vec1.y + vec2.y));
 };
 
 DE.Vector.Sub = function(vec1,vec2){
 	vec1 = DE.Util.Unwrap(vec1);
 	vec2 = DE.Util.Unwrap(vec2);
 
-	var x = vec1.x - vec2.x;
-	var y = vec1.y - vec2.y;
-	return DE.Vec2d(x,y);
+	return DE.Vec2d((vec1.x - vec2.x), (vec1.y - vec2.y));
+};
+
+DE.Vector.Normalize = function(vec, scalar) {
+	var normalVec = DE.Vec2d(vec.x,vec.y);
+	var length = normalVec.Length();
+	var normalLength = length != 0 ? (1.0 / length) : 1;
+
+	normalVec.x = normalVec.x * normalLength;
+	normalVec.y = normalVec.y * normalLength;
+
+	if(scalar > 0){
+		normalVec.Scale(scalar);
+	}
+
+	return normalVec;
 };
 
 DE.Vector.HeadingToDeg = function(HeadingVec){
-	var world = DE.Vec2d(1,0);	
-	var blah = DE.Vec2d(HeadingVec.x,HeadingVec.y);
-	var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(blah.Normalize())));	
-	if(HeadingVec.y < 0){ degrees = 360 - degrees}; //dot product returns 0 - pi, fix over 180 problems.
+	var world = DE.Vec2d(1,0);		
+	var heading = DE.Vector.Normalize(HeadingVec);
+	var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(heading)));	
+	
+	//dot product returns 0 to pi, fix over 180 problems.
+	if(heading.y < 0)
+	{
+		degrees = 360 - degrees
+	}; 
+	
 	return degrees;
 };
 

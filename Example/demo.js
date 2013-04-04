@@ -14,21 +14,19 @@ var KEY_ROT_RIGHT = 'Q'.charCodeAt();
 
 var TILE_SIZE = 16;
 var SPRITE_SIZE = 16;
-var TILE_COUNT = PG_WIDTH / TILE_SIZE;
+var TILE_COUNT = PG_WIDTH / (TILE_SIZE*4);
 
 var redCube = new $.gameQuery.Animation({ imageURL: "./v1-small.png"});  //media
 var blueCube = new $.gameQuery.Animation({ imageURL: "./v2-small.png"});  //media
-var grid = new $.gameQuery.Animation({ imageURL: "./grid-small.png"});  //media
+var grid = new $.gameQuery.Animation({ imageURL: "./grid2.png"});  //media
 
 //helpers
 var handlePlayerKeys = function(){
-  var player = $("#cube"),
+  var player = $("#player"),
       keys = $.gameQuery.keyTracker;
 
   var trans = DE.Vec2d();
-  
-  //if(keys[KEY_LEFT])  { trans.y += SPEED; }
-  //if(keys[KEY_RIGHT]) { trans.y -= SPEED; }
+
   if(keys[KEY_UP])    { trans.x += SPEED; }
   if(keys[KEY_DOWN])  { trans.x -= SPEED; }
   if(keys[KEY_LEFT])  { player.rotate(-SPEED,true); }
@@ -36,39 +34,38 @@ var handlePlayerKeys = function(){
 
   var currentRot = DE.HeadingVec(player.rotate());
   var trans = DE.Vector.WorldToLocal(trans,currentRot);
-  player.xy(trans,true);
-
-  
+  if(trans.Length() > 0){
+    player.xy(trans,true); 
+  } 
 };
 
 var updatePlayer = function(){
   handlePlayerKeys();
 
-  var player = $("#cube"),
-      enemy = $("#cube2"),
+  var player = $("#player"),
+      enemy = $("#enemy"),
       playerPos = DE.Vec2d(player.xy()),
       enemyPos = DE.Vec2d(enemy.xy());
   
   
-  //var flee = DE.Steer.flee(playerPos,enemyPos,1,64);
+  //var flee = DE.Steer.flee(playerPos,enemyPos,10,64);
+  //player.rotate(DE.Vector.HeadingToDeg(flee));
   //player.xy(flee, true);
 }
 
-var enemyWander = DE.Vec2d(0,0);
-var enemyHeading = DE.Vec2d(1,0);
+var center = DE.Vec2d(PG_WIDTH/2,PG_HEIGHT/2);
 
 var updateEnemy = function(){
-  var player = $("#cube"),
-      enemy = $("#cube2"),
-      playerPos = DE.Vec2d(player.xy()),
-      //playerPos = DE.Vec2d(64,64),
+  var player = $("#player"),
+      enemy = $("#enemy"),
+      playerPos = DE.Vec2d(player.xy()),      
       enemyPos = DE.Vec2d(enemy.xy());
+  
+  if(enemyPos.DistanceFrom(center) < 8){
+    enemy.xy(DE.Math.Rand(0,PG_WIDTH),DE.Math.Rand(0,PG_HEIGHT))
+  }
 
-  
-  enemyHeading = DE.HeadingVec(enemy.rotate());
-  
-  //var steering = DE.Steer.wander(enemyPos,enemyWander,enemyHeading);
-  var steering = DE.Steer.arrive(enemyPos,playerPos,10);
+  var steering = DE.Steer.Seek(enemyPos,playerPos,5);
   enemy.rotate(DE.Vector.HeadingToDeg(steering));
   enemy.xy(steering, true);
 };
@@ -83,12 +80,12 @@ $(document).ready(function(){
   var $playground = $("#demo");  
 
   $playground
-    .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true, mouseTracker: true})
+    .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true})
 
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
-      .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE, height: TILE_SIZE, sizex: TILE_COUNT, sizey: TILE_COUNT})
-      .addSprite('cube',{animation: redCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
-      .addSprite('cube2',{animation: blueCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
+      .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE*4, height: TILE_SIZE*4, sizex: TILE_COUNT, sizey: TILE_COUNT})
+      .addSprite('player',{animation: redCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
+      .addSprite('enemy',{animation: blueCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
       .end()
     .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();

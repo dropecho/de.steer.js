@@ -17,7 +17,7 @@ var TILE_COUNT = PG_WIDTH / TILE_SIZE;
 
 var redCube = new $.gameQuery.Animation({ imageURL: "./v1-small.png"});  //media
 var blueCube = new $.gameQuery.Animation({ imageURL: "./v2-small.png"});  //media
-var grid = new $.gameQuery.Animation({ imageURL: "./grid-small.png"});  //media
+var grid = new $.gameQuery.Animation({ imageURL: "./grid2.png"});  //media
 
 //helpers
 var handlePlayerKeys = function(){
@@ -45,7 +45,7 @@ $(document).ready(function(){
 
   $playground.playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true, mouseTracker: true});
   var actors = $playground.addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH});
-  actors.addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE, height: TILE_SIZE, sizex: TILE_COUNT, sizey: TILE_COUNT});
+  actors.addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE*4, height: TILE_SIZE*4, sizex: TILE_COUNT*4, sizey: TILE_COUNT*4});
   actors.addSprite('cube',{animation: redCube, posx: 128, posy: 128, height:TILE_SIZE, width: TILE_SIZE}); //Add player.  
 
   var updatePlayer = function(){
