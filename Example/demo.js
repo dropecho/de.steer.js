@@ -48,7 +48,7 @@ var updatePlayer = function(){
       enemyPos = DE.Vec2d(enemy.xy());
   
   
-  //var flee = DE.Steer.flee(playerPos,enemyPos,10,64);
+  //var flee = DE.Steer.Evade(playerPos,enemyPos,10,64);
   //player.rotate(DE.Vector.HeadingToDeg(flee));
   //player.xy(flee, true);
 }
@@ -60,12 +60,8 @@ var updateEnemy = function(){
       enemy = $("#enemy"),
       playerPos = DE.Vec2d(player.xy()),      
       enemyPos = DE.Vec2d(enemy.xy());
-  
-  if(enemyPos.DistanceFrom(center) < 8){
-    enemy.xy(DE.Math.Rand(0,PG_WIDTH),DE.Math.Rand(0,PG_HEIGHT))
-  }
 
-  var steering = DE.Steer.Seek(enemyPos,playerPos,5);
+  var steering = DE.Steer.Arrive(enemyPos,playerPos,5);
   enemy.rotate(DE.Vector.HeadingToDeg(steering));
   enemy.xy(steering, true);
 };

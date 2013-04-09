@@ -1,25 +1,55 @@
 var DE = DE || {};
 DE.Steer = function(){
-	function Steering(){};
+	var checkConversion = function(entity){		
+		if(entity.pos == undefined){
+			throw new DE.Errors.ConversionError({property: "entity.pos", message: " is undefined. You must set the position vector in the converter."});
+		}
+		if(entity.heading == undefined){
+			throw new DE.Errors.ConversionError({property: "entity.heading", message:" is undefined. You must set the heading vector in the converter."});
+		}
+		if(entity.max_speed == undefined){
+			throw new DE.Errors.ConversionError({property: "entity.max_speed ", message:"is undefined. You must set the max_speed scalar in the converter."});
+		}		
+	}
+
+	var convertAndCheck= function(entity){
+		if(this.converter == undefined || entity instanceof DE.Vector){
+			return entity;
+		}
+		var converted = this.converter(entity);
+		checkConversion(converted);
+		return converted;
+	}
+
+	function Steering(){
+		this.converter = undefined;		
+	};
+
+	Steering.prototype.RegisterEntityConverter = function(converterCallback) {
+		if(converterCallback.length != 1){
+			throw new DE.Errors.ConversionError({message: "The converter callback must take one and only one arguement, the entity to convert."});
+		}
+		this.converter = converterCallback;		
+	};
 
 	Steering.prototype.Align = function(first_argument) {
 		// body...
 	};
 
-	Steering.prototype.Arrive = function(pos,target,speed,decelForce) {		
+	Steering.prototype.Arrive = function(pos,target,max_speed,decelForce) {
 		decelForce = decelForce || 5;
 		var distToTarget = pos.DistanceFrom(target);
 		
 		if(distToTarget > 0){	
 			var arriveSpeed = distToTarget/decelForce; //Tweak wanted velocity to distance from target.
-			arriveSpeed = DE.Math.Clamp(arriveSpeed,0,speed); //Clamp to maximum speed.
+			arriveSpeed = DE.Math.Clamp(arriveSpeed,0,max_speed); //Clamp to maximum speed.
 			return this.Seek(pos,target,arriveSpeed); //Get seek vector			
 		}
 
 		return DE.Vec2d(0,0); //dont go nowhere.
 	};	
 
-	Steering.prototype.Cohese = function(pos,neighborPositions,speed) {
+	Steering.prototype.Cohese = function(pos,neighborPositions,max_speed) {
 		var centerOfMass = DE.Vec2d(0,0);
 		var neighborCount = neighborPositions.length;
 
@@ -29,27 +59,27 @@ DE.Steer = function(){
 
 		if(neighborCount > 0){					
 			centerOfMass.Scale(1/neighborCount);
-			return this.Seek(pos,centerOfMass,speed);			
+			return this.Arrive(pos,centerOfMass,max_speed);			
 		}
 
 		return DE.Vec2d(0,0);
 	};
 
-	Steering.prototype.Evade = function(pos,target,speed,targetHeadingDeg, targetCurrentSpeed) {
+	Steering.prototype.Evade = function(pos,target,max_speed,targetHeadingDeg, targetCurrentSpeed) {
 		var toTarget = DE.Vector.Sub(target,pos);
 		var heading = DE.HeadingVec(targetHeadingDeg);			
 		var targetCurrentSpeed = targetCurrentSpeed || 60;
 
-		var lookAhead = toTarget.Length() / (speed + targetCurrentSpeed);		
+		var lookAhead = toTarget.Length() / (max_speed + targetCurrentSpeed);		
 		var estimatedTargetPos = DE.Vector.Add(target,heading.Normalize(lookAhead));
 		
 		return this.Flee(pos,estimatedTargetPos);
 	};
 
-	Steering.prototype.Flee = function(pos,target,speed,fleeRadius) {
-		var shouldFlee = true;//(fleeRadius === undefined || fleeRadius === -1 || target.GetDistanceFrom(pos) <= fleeRadius);
+	Steering.prototype.Flee = function(pos,target,max_speed,fleeRadius) {
+		var shouldFlee =(fleeRadius === undefined || fleeRadius === -1 || target.DistanceFrom(pos) <= fleeRadius);
 		
-		var flee = DE.Vector.Sub(pos,target).Normalize(speed); //Get toTarget vec, scale to max speed.
+		var flee = DE.Vector.Sub(pos,target).Normalize(max_speed); //Get toTarget vec, scale to max max_speed.
 		return shouldFlee ? flee : DE.Vec2d(0,0);
 	};
 
@@ -65,19 +95,19 @@ DE.Steer = function(){
 		// body...
 	};
 
-	Steering.prototype.Pursuit = function(pos,target,speed,targetHeadingDeg, targetCurrentSpeed) {
+	Steering.prototype.Pursuit = function(pos,target,max_speed,targetHeadingDeg, targetCurrentSpeed) {
 		var toTarget = DE.Vector.Sub(target,pos),
 			heading = DE.HeadingVec(targetHeadingDeg),
 			targetCurrentSpeed = targetCurrentSpeed || 60;
 
-		var lookAhead = toTarget.Length() / (speed + targetCurrentSpeed);		
+		var lookAhead = toTarget.Length() / (max_speed + targetCurrentSpeed);		
 		var estimatedTargetPos = DE.Vector.Add(target,heading.Normalize(lookAhead));
 		
 		return this.Seek(pos,estimatedTargetPos);
 	};
 
-	Steering.prototype.Seek = function(pos,target,speed) {						
-		return DE.Vector.Sub(target,pos).Normalize(speed);
+	Steering.prototype.Seek = function(pos,target,max_speed) {						
+		return DE.Vector.Sub(target,pos).Normalize(max_speed);
 	};
 
 	Steering.prototype.Seperation = function(pos,neighborPositions) {	
@@ -88,7 +118,7 @@ DE.Steer = function(){
 	    {        
 	        var awayFromNeighbor = DE.Vector.Sub(pos,neighborPositions[i]);
 	        var distanceToNeighbor = awayFromNeighbor.Length();
-	        SteeringForce.Add(awayFromNeighbor.Normalize(64/distanceToNeighbor));    
+	        SteeringForce.Add(awayFromNeighbor.Normalize(128/distanceToNeighbor));    
 	    }
 
 	    return SteeringForce;

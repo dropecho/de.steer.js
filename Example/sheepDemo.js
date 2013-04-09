@@ -74,9 +74,9 @@ $(document).ready(function(){
          
       var neighbors = DE.Util.RemoveElement(sheepPositions,i);            
       
-      var steering = DE.Steer.flee(sheepPos,playerPos,10,32);
-      steering.Add(DE.Steer.cohese(sheepPos,neighbors,10));
-      steering.Add(DE.Steer.seperation(sheepPos,neighbors));
+      var steering = DE.Steer.Flee(sheepPos,playerPos,10,32);
+      steering.Add(DE.Steer.Cohese(sheepPos,neighbors,10));
+      steering.Add(DE.Steer.Seperation(sheepPos,neighbors));
       
       sheep[i].rotate(DE.Vector.HeadingToDeg(steering));
       sheep[i].xy(steering, true);        
