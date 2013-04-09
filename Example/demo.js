@@ -1,6 +1,6 @@
 // Config
-var PG_HEIGHT = 1024;
-var PG_WIDTH = 1600;
+var PG_HEIGHT = 768;
+var PG_WIDTH = 1024;
 var REFRESH_RATE = 0;
 var SPEED = 10;
 
@@ -14,7 +14,8 @@ var KEY_ROT_RIGHT = 'Q'.charCodeAt();
 
 var TILE_SIZE = 16;
 var SPRITE_SIZE = 16;
-var TILE_COUNT = PG_WIDTH / (TILE_SIZE*4);
+var TILE_COUNT_X = PG_WIDTH / (TILE_SIZE*4);
+var TILE_COUNT_Y = PG_HEIGHT / (TILE_SIZE*4);
 
 var redCube = new $.gameQuery.Animation({ imageURL: "./v1-small.png"});  //media
 var blueCube = new $.gameQuery.Animation({ imageURL: "./v2-small.png"});  //media
@@ -54,6 +55,7 @@ var updatePlayer = function(){
 }
 
 var center = DE.Vec2d(PG_WIDTH/2,PG_HEIGHT/2);
+var target = DE.Vec2d(0,0);
 
 var updateEnemy = function(){
   var player = $("#player"),
@@ -61,7 +63,9 @@ var updateEnemy = function(){
       playerPos = DE.Vec2d(player.xy()),      
       enemyPos = DE.Vec2d(enemy.xy());
 
-  var steering = DE.Steer.Arrive(enemyPos,playerPos,5);
+  var heading = DE.HeadingVec(enemy.rotate());
+  var steering = DE.Steer.Wander(enemyPos,target,heading);
+  
   enemy.rotate(DE.Vector.HeadingToDeg(steering));
   enemy.xy(steering, true);
 };
@@ -79,9 +83,9 @@ $(document).ready(function(){
     .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true})
 
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
-      .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE*4, height: TILE_SIZE*4, sizex: TILE_COUNT, sizey: TILE_COUNT})
+      .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE*4, height: TILE_SIZE*4, sizex: TILE_COUNT_X, sizey: TILE_COUNT_Y})
       .addSprite('player',{animation: redCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
-      .addSprite('enemy',{animation: blueCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
+      .addSprite('enemy',{animation: blueCube, posx: center.x, posy: center.y, height:SPRITE_SIZE, width: SPRITE_SIZE})
       .end()
     .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();
