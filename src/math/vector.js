@@ -176,7 +176,7 @@ DE.VecTest = function(){
 	var test = DE.Vec2d(1,0);
 	for (var i = 0; i <= 360; i+=5) {
 		var local = DE.Vector.WorldToLocal(test,DE.HeadingVec(i));
-		var world = DE.Vector.LocalToWorld(local,DE.HeadingVec(i));
+		var world = DE.Vector.LocalToWorld(local,DE.HeadingVec(i),DE.Vec2d(0,0));
 
 		if(world.x < test.x - .0001 || world.x > test.x + .0001){
 			console.log("AT: ",i, " Expected x to be:",test.x, "  Got:", world.x);
