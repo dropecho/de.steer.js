@@ -1,5 +1,4 @@
-var DE = DE || {};
-DE.Math = DE.Math || {};
+DE.Utils.namespace("DE.Math");
 
 DE.Math.PI = Math !== undefined ? Math.PI : 3.141592653;
 

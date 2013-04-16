@@ -1,5 +1,4 @@
-DE = DE||{};
-DE.Errors = {};
+DE.Utils.namespace("DE.Errors");
 
 DE.Errors.ConversionError = function(opts){
 	this.name = "ConversionError";

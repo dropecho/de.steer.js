@@ -1,5 +1,6 @@
-var DE = DE || {};
-DE.Steer = function(){
+DE.Utils.namespace("DE.Steer");
+
+DE.Steer.Behaviors = function(){
 	function Steering(){		
 	};
 

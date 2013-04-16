@@ -1,4 +1,5 @@
-DE = DE || {};
+DE.Utils.namespace("DE");
+
 DE.Converter = function(){
 
 	var checkConversion = function(entity){
