@@ -1,5 +1,7 @@
 var DE = DE || {};
-DE.Steer = function(){
+var DE.Steer = DE.Steer || {};
+
+DE.Steer.Steering = function(){
 	function Steering(){		
 	};
 
