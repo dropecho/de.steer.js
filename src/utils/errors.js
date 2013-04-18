@@ -1,4 +1,4 @@
-DE = DE||{};
+var DE = DE||{};
 DE.Errors = {};
 
 DE.Errors.ConversionError = function(opts){

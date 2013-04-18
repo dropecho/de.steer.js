@@ -26,15 +26,15 @@ var handlePlayerKeys = function(){
   var player = $("#player"),
       keys = $.gameQuery.keyTracker;
 
-  var trans = DE.Vec2d();
+  var trans = DE.Math.Vec2d();
 
   if(keys[KEY_UP])    { trans.x += SPEED; }
   if(keys[KEY_DOWN])  { trans.x -= SPEED; }
   if(keys[KEY_LEFT])  { player.rotate(-SPEED,true); }
   if(keys[KEY_RIGHT]) { player.rotate(SPEED,true);}  
 
-  var currentRot = DE.HeadingVec(player.rotate());
-  var trans = DE.Vector.WorldToLocal(trans,currentRot);
+  var currentRot = DE.Math.HeadingVec(player.rotate());
+  var trans = DE.Math.Vector.WorldToLocal(trans,currentRot);
   if(trans.Length() > 0){
     player.xy(trans,true); 
   } 
@@ -45,8 +45,8 @@ var updatePlayer = function(){
 
   var player = $("#player"),
       enemy = $("#enemy"),
-      playerPos = DE.Vec2d(player.xy()),
-      enemyPos = DE.Vec2d(enemy.xy());
+      playerPos = DE.Math.Vec2d(player.xy()),
+      enemyPos = DE.Math.Vec2d(enemy.xy());
   
   
   //var flee = DE.Steer.Evade(playerPos,enemyPos,10,64);
@@ -54,20 +54,20 @@ var updatePlayer = function(){
   //player.xy(flee, true);
 }
 
-var center = DE.Vec2d(PG_WIDTH/2,PG_HEIGHT/2);
-var target = DE.Vec2d(0,0);
+var center = DE.Math.Vec2d(PG_WIDTH/2,PG_HEIGHT/2);
+var target = DE.Math.Vec2d(0,0);
 
 var updateEnemy = function(){
   var player = $("#player"),
       enemy = $("#enemy"),
-      playerPos = DE.Vec2d(player.xy()),      
-      enemyPos = DE.Vec2d(enemy.xy());
+      playerPos = DE.Math.Vec2d(player.xy()),      
+      enemyPos = DE.Math.Vec2d(enemy.xy());
 
-  var heading = DE.HeadingVec(enemy.rotate());
-  var steering = DE.Steer.Wander(enemyPos,target,heading);
+  var heading = DE.Math.HeadingVec(enemy.rotate());
+  var Behaviors = DE.Steer.Behaviors.Wander(enemyPos,target,heading);
   
-  enemy.rotate(DE.Vector.HeadingToDeg(steering));
-  enemy.xy(steering, true);
+  enemy.rotate(DE.Math.Vector.HeadingToDeg(Behaviors));
+  enemy.xy(Behaviors, true);
 };
 
 //Main game loop.
