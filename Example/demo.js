@@ -22,52 +22,38 @@ var blueCube = new $.gameQuery.Animation({ imageURL: "./v2-small.png"});  //medi
 var grid = new $.gameQuery.Animation({ imageURL: "./grid2.png"});  //media
 
 //helpers
-var handlePlayerKeys = function(){
-  var player = $("#player"),
-      keys = $.gameQuery.keyTracker;
+var player, enemy;
+var target = DE.Math.Vec2d(0,0);
 
-  var trans = DE.Vec2d();
+var handlePlayerKeys = function(){
+  var keys = $.gameQuery.keyTracker;
+
+  var trans = DE.Math.Vec2d();
 
   if(keys[KEY_UP])    { trans.x += SPEED; }
   if(keys[KEY_DOWN])  { trans.x -= SPEED; }
   if(keys[KEY_LEFT])  { player.rotate(-SPEED,true); }
   if(keys[KEY_RIGHT]) { player.rotate(SPEED,true);}  
+    
+  player.xy(player.Steering.ToLocal(trans),true);    
+};
 
-  var currentRot = DE.HeadingVec(player.rotate());
-  var trans = DE.Vector.WorldToLocal(trans,currentRot);
-  if(trans.Length() > 0){
-    player.xy(trans,true); 
-  } 
+var initEntities = function(){  
+  player = DE.Steer.Extender.Extend($("#player"),"GameQuery");
+  enemy = DE.Steer.Extender.Extend($("#enemy"),"GameQuery");
+
+  enemy.max_speed = 5;
 };
 
 var updatePlayer = function(){
   handlePlayerKeys();
-
-  var player = $("#player"),
-      enemy = $("#enemy"),
-      playerPos = DE.Vec2d(player.xy()),
-      enemyPos = DE.Vec2d(enemy.xy());
-  
-  
-  //var flee = DE.Steer.Evade(playerPos,enemyPos,10,64);
-  //player.rotate(DE.Vector.HeadingToDeg(flee));
-  //player.xy(flee, true);
 }
 
-var center = DE.Vec2d(PG_WIDTH/2,PG_HEIGHT/2);
-var target = DE.Vec2d(0,0);
+var updateEnemy = function(){  
+  var desiredVel = enemy.Steering.Wander();
 
-var updateEnemy = function(){
-  var player = $("#player"),
-      enemy = $("#enemy"),
-      playerPos = DE.Vec2d(player.xy()),      
-      enemyPos = DE.Vec2d(enemy.xy());
-
-  var heading = DE.HeadingVec(enemy.rotate());
-  var steering = DE.Steer.Wander(enemyPos,target,heading);
-  
-  enemy.rotate(DE.Vector.HeadingToDeg(steering));
-  enemy.xy(steering, true);
+  enemy.rotate(DE.Math.Vector.HeadingToDeg(desiredVel));
+  enemy.xy(desiredVel,true);  
 };
 
 //Main game loop.
@@ -81,14 +67,14 @@ $(document).ready(function(){
 
   $playground
     .playground({height: PG_HEIGHT, width: PG_WIDTH, refesh: REFRESH_RATE, keyTracker: true})
-
     .addGroup('actors', {height: PG_HEIGHT, width: PG_WIDTH})
       .addTilemap('tileMap',function(){return 1;},grid,{width: TILE_SIZE*4, height: TILE_SIZE*4, sizex: TILE_COUNT_X, sizey: TILE_COUNT_Y})
       .addSprite('player',{animation: redCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
-      .addSprite('enemy',{animation: blueCube, posx: center.x, posy: center.y, height:SPRITE_SIZE, width: SPRITE_SIZE})
+      .addSprite('enemy',{animation: blueCube, posx: 512, posy: 512, height:SPRITE_SIZE, width: SPRITE_SIZE})
       .end()
     .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();
+    initEntities();
 });
 
 
