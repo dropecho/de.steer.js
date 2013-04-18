@@ -1,4 +1,4 @@
-DE = DE || {};
+var DE = DE || {};
 DE.Steer = DE.Steer || {};
 DE.Steer.Extenders = DE.Steer.Extenders || {};
 

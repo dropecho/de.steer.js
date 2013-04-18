@@ -28,7 +28,7 @@ DE.Steer.EntityBehaviors = function(){
 			max_speed = this.entity.de_max_speed(),
 			neighborPositions = [];
 
-		for(var i = 0, nLength = neighbors.length; i < nLength; i++){
+		for(var i = 0, l = neighbors.length; i < l; i++){
 			neighborPositions.push(neighbors.de_pos());
 		}
 
@@ -86,7 +86,7 @@ DE.Steer.EntityBehaviors = function(){
 		var pos = this.entity.de_pos(),
 			neighborPositions = [];
 
-		for(var i = 0, nLength = neighbors.length; i < nLength; i++){
+		for(var i = 0, l = neighbors.length; i < l; i++){
 			neighborPositions.push(neighbors.de_pos());
 		}
 
