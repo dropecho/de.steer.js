@@ -68,9 +68,9 @@ DE.Steer.Behaviors = function(){
 		// body...
 	};
 
-	Behaviors.prototype.Pursuit = function(pos,target,max_speed,targetHeadingDeg, targetCurrentSpeed) {
+	Behaviors.prototype.Pursuit = function(pos,target,max_speed,targetHeading, targetCurrentSpeed) {
 		var toTarget = DE.Math.Vector.Sub(target,pos),
-			heading = DE.Math.HeadingVec(targetHeadingDeg),
+			heading = (targetHeading instanceof DE.Math.Vector) ? targetHeading : DE.Math.HeadingVec(targetHeadingDeg),
 			targetCurrentSpeed = targetCurrentSpeed || 60;
 
 		var lookAhead = toTarget.Length() / (max_speed + targetCurrentSpeed);		
@@ -98,7 +98,7 @@ DE.Steer.Behaviors = function(){
 
 	};	
 
-	Behaviors.prototype.Wander = function(pos,target, HeadingVec) {
+	Behaviors.prototype.Wander = function(pos, target, HeadingVec) {
 		var radius = 1,
 			dist = 10,
 			jitter = 1;

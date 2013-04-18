@@ -50,7 +50,7 @@ var updatePlayer = function(){
 }
 
 var updateEnemy = function(){  
-  var desiredVel = enemy.Steering.Seek(player);
+  var desiredVel = enemy.Steering.Wander();
 
   enemy.rotate(DE.Math.Vector.HeadingToDeg(desiredVel));
   enemy.xy(desiredVel,true);  
