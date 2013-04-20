@@ -60,8 +60,9 @@ DE.Steer.Behaviors = function(){
 		// body...
 	};
 
-	Behaviors.prototype.Interpose = function(first_argument) {
-		// body...
+	Behaviors.prototype.Interpose = function(pos, target_1, target_2, max_speed) {		
+		var midpoint = DE.Math.Vector.MidPoint(target_1,target_2);
+		return Arrive(pos, midpoint, max_speed);
 	};
 
 	Behaviors.prototype.ObstacleAvoid = function(first_argument) {

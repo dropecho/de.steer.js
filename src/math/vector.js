@@ -9,9 +9,7 @@ DE.Math.Vector = function(){
 		} else {
 			this.x = DE.Util.Unwrap(x) || 0;
 			this.y = DE.Util.Unwrap(y) || 0;
-		}
-
-		return this;
+		}		
 	};
 
 	Vector.prototype.Scale = function(scale){
@@ -160,6 +158,12 @@ DE.Math.Vector.LocalToWorld = function(vec,headingVec,pos){
 
 	return DE.Math.Vec2d(x,y).Add(pos);
 };
+
+DE.Math.Vector.MidPoint = function(vec1,vec2){
+	var x = (vec1.x + vec2.x) * 0.5;
+	var y = (vec1.y + vec2.y) * 0.5;
+	return DE.Vec2d(x, y);
+}
 
 DE.Math.Vector.HeadingToDegTest = function(){
 	for (var i = 0; i < 360; i++){
