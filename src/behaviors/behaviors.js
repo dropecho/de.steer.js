@@ -5,8 +5,20 @@ DE.Steer.Behaviors = function(){
 	function Behaviors(){				
 	};
 
-	Behaviors.prototype.Align = function(first_argument) {
-		// body...
+	Behaviors.prototype.Align = function(headingVec, neighborHeadings) {		
+		var averageHeading = DE.Math.Vec2d(); 
+		var neighborCount = neighborHeadings.length; 
+		
+		for(var i = 0; i < neighborCount; ++i){
+			averageHeading.Add(neighborHeadings[i]);
+		}
+		
+		if(neighborCount > 0){
+			averageHeading.Scale(1/neighborCount);
+			averageHeading.Sub(headingVec);
+		}
+
+		return averageHeading;
 	};
 
 	Behaviors.prototype.Arrive = function(pos,target,max_speed,decelForce) {
