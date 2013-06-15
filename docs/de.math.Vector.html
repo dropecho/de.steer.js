@@ -210,7 +210,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 8
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line10">line 10</a>
     </li></ul></dd>
     
 
@@ -256,6 +256,1186 @@
         <dl>
             
 <dt>
+    <h4 class="name" id="Add"><span class="type-signature">&lt;static> </span>Add<span class="signature">(vec1, vec2)</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Adds two vectors without changing either one.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>vec1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>vec2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line140">line 140</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    - a new vector representing the sum of the other two.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="HeadingToDeg"><span class="type-signature">&lt;static> </span>HeadingToDeg<span class="signature">(heading)</span><span class="type-signature"> &rarr; {number}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Converts a heading vector into a rotation in degrees.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>heading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The vector to convert to degrees.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line183">line 183</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    degrees - The degrees representing the rotation of the vector from the world's x-axis.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">number</span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="LocalToWorld"><span class="type-signature">&lt;static> </span>LocalToWorld<span class="signature">(vec, heading, pos)</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Transforms a vector from local space to world space.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>vec</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The vector to convert.</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>heading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The entities heading vector.</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>pos</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The entities position vector.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line223">line 223</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    local - The transformed vector.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="MidPoint"><span class="type-signature">&lt;static> </span>MidPoint<span class="signature">(vec1, vec2)</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Finds the midpoint of two vectors.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>vec1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>vec2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line242">line 242</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    midpoint - The midpoint of the two vectors.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="Normalize"><span class="type-signature">&lt;static> </span>Normalize<span class="signature">(vec, <span class="optional">scalar</span>)</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Build a normalized and optionally scaled form of a vector, without changing it.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+		<th>Argument</th>
+		
+
+		
+		<th>Default</th>
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>vec</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last">the vector to normalize.</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>scalar</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    1
+                
+                </td>
+            
+
+            <td class="description last">an optional scale.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line164">line 164</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    - a new vector, normalized and scaled.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="Sub"><span class="type-signature">&lt;static> </span>Sub<span class="signature">(vec1, vec2)</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Subtracts two vectors without changing either one.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>vec1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>vec2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line152">line 152</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    - a new vector representing the difference of the other two.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="WorldToLocal"><span class="type-signature">&lt;static> </span>WorldToLocal<span class="signature">(vec, heading)</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Converts a vector from world space to the entities local space.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params table table-striped">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+
+		<th>Type</th>
+
+		
+
+		
+
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+
+	<tbody>
+	
+
+        <tr>
+            
+                <td class="name"><code>vec</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The vector to convert.</td>
+        </tr>
+
+	
+
+        <tr>
+            
+                <td class="name"><code>heading</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">The entities heading vector.</td>
+        </tr>
+
+	
+	</tbody>
+</table>
+
+    
+    
+    
+<dl class="details">
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line202">line 202</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+    
+    
+
+    
+
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    local - The transformed vector.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="de.math.Vector.html">de.math.Vector</a></span>
+
+
+	</dd>
+</dl>
+
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
     <h4 class="name" id="Add"><span class="type-signature"></span>Add<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="de.math.Vector.html">de.math.Vector</a>}</span></h4>
     
     
@@ -293,7 +1473,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 37
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line39">line 39</a>
     </li></ul></dd>
     
 
@@ -385,7 +1565,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 84
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line86">line 86</a>
     </li></ul></dd>
     
 
@@ -473,7 +1653,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 61
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line63">line 63</a>
     </li></ul></dd>
     
 
@@ -565,7 +1745,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 69
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line71">line 71</a>
     </li></ul></dd>
     
 
@@ -657,7 +1837,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 76
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line78">line 78</a>
     </li></ul></dd>
     
 
@@ -818,7 +1998,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 93
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -910,7 +2090,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 109
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line111">line 111</a>
     </li></ul></dd>
     
 
@@ -998,7 +2178,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 25
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line27">line 27</a>
     </li></ul></dd>
     
 
@@ -1086,7 +2266,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        math/vector.js, line 49
+        <a href="global.html#math/vector.js">math/vector.js</a>, <a href="global.html#math/vector.js#line51">line 51</a>
     </li></ul></dd>
     
 
@@ -1155,7 +2335,7 @@
 					
 		<span class="jsdoc-message">
 		Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.0-dev</a>
-		on Sat Jun 08 2013 12:33:10 GMT-0500 (CDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
+		on Thu Jun 13 2013 22:40:11 GMT-0500 (CDT) using the <a href="https://github.com/terryweiss/docstrap">DocStrap template</a>.
 		</span>
 				</footer>
 			</div>

@@ -1,3 +1,5 @@
+/** @file Implementation of base behaviors. Used by the entityBehaviors. */
+
 var de = de || {};
 de.steer = de.steer || {};
 
@@ -109,6 +111,9 @@ de.steer.Behaviors.prototype.Flee = function(pos,target,max_speed,fleeRadius) {
 	return shouldFlee ? flee : DE.Math.Vec2d(0,0);
 };
 
+/** @desc Builds a force to hide from a target behind obstacles.
+*	@todo Implement this.
+*/
 de.steer.Behaviors.prototype.Hide = function(first_argument) {
 	// body...
 };
@@ -126,6 +131,10 @@ de.steer.Behaviors.prototype.Interpose = function(pos, target_1, target_2, max_s
 	return Arrive(pos, midpoint, max_speed);
 };
 
+
+/** @desc Builds a force to avoid obstacles.
+*	@todo Implement this.
+*/
 de.steer.Behaviors.prototype.ObstacleAvoid = function(first_argument) {
 	// body...
 };

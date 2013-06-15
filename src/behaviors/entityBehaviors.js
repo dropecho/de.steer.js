@@ -1,3 +1,5 @@
+/** @file Implementation of behaviors on entity. */
+
 var de = de || {};
 de.steer = de.steer || {};
 

@@ -1,3 +1,5 @@
+/** @file */
+
 var de = de || {};
 de.math = de.math || {};
 
@@ -110,19 +112,31 @@ de.math.Vector.prototype.Perp = function() {
 	return de.math.Vec2d(-this.y,this.x);
 };
 
-//Convenience Methods
+/** @desc Convenience Method to build a 2d vector.
+*	@param {number|object} x - The x component of the vector, or another object with x,y.
+*	@param {number} y - The y component of the vector.
+*	@returns {de.math.Vector} - a new vector.
+*/
 de.math.Vec2d = function(x,y){
-	return new de.math.de.math.Vector(x,y);
+	return new de.math.Vector(x,y);
 }
 
+/** @desc Builds a vector from a degrees, used for game entities with only a rotation.
+*	@param {number} degrees - The degrees to build a heading vector from.
+*	@returns {de.math.Vector} - a unit vector rotated by degrees.
+*/
 de.math.HeadingVec = function(degrees){
 	var rads = de.math.DegToRad(degrees);
 	var x = de.math.CleanFloat(Math.cos(rads));
 	var y = de.math.CleanFloat(Math.sin(rads));
-	return de.math.Vec2d(x,y);
+	return de.math.Vec2d(x,y).Normalize();
 }
 
-//de.math.Vector util functions.
+/** @desc Adds two vectors without changing either one.
+*	@param {de.math.Vector} vec1
+*	@param {de.math.Vector} vec2 
+*	@returns {de.math.Vector} - a new vector representing the sum of the other two.
+*/
 de.math.Vector.Add = function(vec1,vec2){
 	vec1 = DE.Util.Unwrap(vec1);
 	vec2 = DE.Util.Unwrap(vec2);
@@ -130,6 +144,11 @@ de.math.Vector.Add = function(vec1,vec2){
 	return de.math.Vec2d((vec1.x + vec2.x), (vec1.y + vec2.y));
 };
 
+/** @desc Subtracts two vectors without changing either one.
+*	@param {de.math.Vector} vec1
+*	@param {de.math.Vector} vec2 
+*	@returns {de.math.Vector} - a new vector representing the difference of the other two.
+*/
 de.math.Vector.Sub = function(vec1,vec2){
 	vec1 = DE.Util.Unwrap(vec1);
 	vec2 = DE.Util.Unwrap(vec2);
@@ -137,6 +156,11 @@ de.math.Vector.Sub = function(vec1,vec2){
 	return de.math.Vec2d((vec1.x - vec2.x), (vec1.y - vec2.y));
 };
 
+/** @desc Build a normalized and optionally scaled form of a vector, without changing it.
+*	@param {de.math.Vector} vec - the vector to normalize.
+*	@param {number} [scalar=1] - an optional scale.
+*	@returns {de.math.Vector} - a new vector, normalized and scaled.
+*/
 de.math.Vector.Normalize = function(vec, scalar) {
 	var normalVec = de.math.Vec2d(vec.x,vec.y);
 	var length = normalVec.Length();
@@ -152,10 +176,14 @@ de.math.Vector.Normalize = function(vec, scalar) {
 	return normalVec;
 };
 
-de.math.Vector.HeadingToDeg = function(HeadingVec){
+/** @desc Converts a heading vector into a rotation in degrees.
+*	@param {de.math.Vector} heading - The vector to convert to degrees.
+*	@returns {number} degrees - The degrees representing the rotation of the vector from the world's x-axis.
+*/
+de.math.Vector.HeadingToDeg = function(heading){
 	var world = de.math.Vec2d(1,0);		
-	var heading = de.math.de.math.Vector.Normalize(HeadingVec);
-	var degrees = de.math.RadToDeg(Math.acos(world.Dot(heading)));	
+	var normalized_heading = de.math.Vector.Normalize(heading);
+	var degrees = de.math.RadToDeg(Math.acos(world.Dot(normalized_heading)));	
 	
 	//dot product returns 0 to pi, fix over 180 problems.
 	if(heading.y < 0)
@@ -166,14 +194,19 @@ de.math.Vector.HeadingToDeg = function(HeadingVec){
 	return degrees;
 };
 
-de.math.Vector.WorldToLocal = function(vec,headingVec){
+/** @desc Converts a vector from world space to the entities local space.
+*	@param {de.math.Vector} vec - The vector to convert.
+*	@param {de.math.Vector} heading - The entities heading vector.
+*	@returns {de.math.Vector} local - The transformed vector.
+*/
+de.math.Vector.WorldToLocal = function(vec,heading){
 	//heading vec is used as X axis in local coords
 	//its perpendicular is used as the orthagonal y axis in the local coords.
 	//[x1,y1]
 	//[x2,y2]
-	var perp = headingVec.Perp();
+	var perp = heading.Perp();
 
-	var mat = [[headingVec.x,perp.x],[headingVec.y,perp.y]];
+	var mat = [[heading.x,perp.x],[heading.y,perp.y]];
 	
 	var x = (vec.x * mat[0][0]) + (vec.y * mat[0][1]);
 	var y = (vec.x * mat[1][0]) + (vec.y * mat[1][1]);
@@ -181,7 +214,13 @@ de.math.Vector.WorldToLocal = function(vec,headingVec){
 	return de.math.Vec2d(x,y);
 };
 
-de.math.Vector.LocalToWorld = function(vec,headingVec,pos){	
+/** @desc Transforms a vector from local space to world space.
+*	@param {de.math.Vector} vec - The vector to convert.
+*	@param {de.math.Vector} heading - The entities heading vector.
+*	@param {de.math.Vector} pos - The entities position vector.
+*	@returns {de.math.Vector} local - The transformed vector.
+*/
+de.math.Vector.LocalToWorld = function(vec, heading, pos){	
 	var world = de.math.Vec2d(1,0);
 	var degrees = de.math.de.math.Vector.HeadingToDeg(headingVec);
 	
@@ -195,6 +234,11 @@ de.math.Vector.LocalToWorld = function(vec,headingVec,pos){
 	return de.math.Vec2d(x,y).Add(pos);
 };
 
+/** @desc Finds the midpoint of two vectors.
+*	@param {de.math.Vector} vec1
+*	@param {de.math.Vector} vec2
+*	@returns {de.math.Vector} midpoint - The midpoint of the two vectors.
+*/
 de.math.Vector.MidPoint = function(vec1,vec2){
 	var x = (vec1.x + vec2.x) * 0.5;
 	var y = (vec1.y + vec2.y) * 0.5;
