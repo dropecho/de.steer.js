@@ -5,13 +5,13 @@ DE.Util.Unwrap = function(val){
 	return typeof val === 'function' ? val() : val;
 }
 
-DE.Util.RemoveElement = function(array,index){
+DE.Util.RemoveElement = function(array,inDEx){
 	var newArray = [];
 	for (var i = 0; i < array.length; i++) {
 		newArray.push(array[i]);
 	};
 
-	newArray.splice(index,1);
+	newArray.splice(inDEx,1);
 	return newArray;
 }
 

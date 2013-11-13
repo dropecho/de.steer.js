@@ -1,13 +1,13 @@
 /** @file */
 
-var de = de || {};
-de.math = de.math || {};
+var DE = DE || {};
+DE.Math = DE.Math || {};
 
 /** @constructor
 *	@param {number|object} x - The x component of the vector, or another object with x,y.
 *	@param {number} y - The y component of the vector.
 */
-de.math.Vector = function(){	
+DE.Math.Vector = function(){	
 	function Vector(x,y){
 		if(typeof DE.Util.Unwrap(x) === 'object'){			
 			this.x = DE.Util.Unwrap(x.x) || 0;
@@ -17,14 +17,14 @@ de.math.Vector = function(){
 			this.y = DE.Util.Unwrap(y) || 0;
 		}		
 	};
-	return de.math.Vector;
+	return Vector;
 }();
 
 /**
 *	@params {number} scale - The scalar to apply to the vector.
-* 	@returns {de.math.Vector} - 'this' vector scaled.
+* 	@returns {DE.Math.Vector} - 'this' vector scaled.
 */
-de.math.Vector.prototype.Scale = function(scale){
+DE.Math.Vector.prototype.Scale = function(scale){
 	scale = DE.Util.Unwrap(scale) || 1;
 	this.x *= scale;
 	this.y *= scale;
@@ -33,10 +33,10 @@ de.math.Vector.prototype.Scale = function(scale){
 };
 
 /**
-*	@params {de.math.Vector} vec - The vector to add.
-* 	@returns {de.math.Vector} - 'this' vector with the other added.
+*	@params {DE.Math.Vector} vec - The vector to add.
+* 	@returns {DE.Math.Vector} - 'this' vector with the other adDEd.
 */
-de.math.Vector.prototype.Add = function(vec){
+DE.Math.Vector.prototype.Add = function(vec){
 	vec = DE.Util.Unwrap(vec);
 	this.x += vec.x;
 	this.y += vec.y;
@@ -45,10 +45,10 @@ de.math.Vector.prototype.Add = function(vec){
 };
 
 /**
-*	@params {de.math.Vector} vec - The vector to sub.
-* 	@returns {de.math.Vector} - 'this' vector with the other subtracted.
+*	@params {DE.Math.Vector} vec - The vector to sub.
+* 	@returns {DE.Math.Vector} - 'this' vector with the other subtracted.
 */
-de.math.Vector.prototype.Sub = function(vec){
+DE.Math.Vector.prototype.Sub = function(vec){
 	vec = DE.Util.Unwrap(vec);
 	this.x -= vec.x;
 	this.y -= vec.y;
@@ -57,42 +57,42 @@ de.math.Vector.prototype.Sub = function(vec){
 }
 
 /**
-*	@params {de.math.Vector} vec - The vector to apply the dot product to.
+*	@params {DE.Math.Vector} vec - The vector to apply the dot product to.
 * 	@returns {number} - Scalar representing the dot product.
 */
-de.math.Vector.prototype.Dot = function(vec){
+DE.Math.Vector.prototype.Dot = function(vec){
 	vec = DE.Util.Unwrap(vec);
 	return ((this.x * vec.x) + (this.y * vec.y));
 }
 
-/**	@desc Get the length/mangitude of the vector.
-* 	@returns {number} - Scalar representing the length/magnitude of the vector.
+/**	@DEsc Get the length/mangituDE of the vector.
+* 	@returns {number} - Scalar representing the length/magnituDE of the vector.
 */
-de.math.Vector.prototype.Length = function() {
+DE.Math.Vector.prototype.Length = function() {
 	return Math.sqrt((this.x * this.x) + (this.y * this.y));
 };
 
-/**	@desc Get the length/mangitude of the vector squared. This skips a sqrt.
-* 	@returns {number} - Scalar representing the length/magnitude of the vector squared.
+/**	@DEsc Get the length/mangituDE of the vector squared. This skips a sqrt.
+* 	@returns {number} - Scalar representing the length/magnituDE of the vector squared.
 */
-de.math.Vector.prototype.LengthSQ = function() {
+DE.Math.Vector.prototype.LengthSQ = function() {
 	return (this.x * this.x) + (this.y * this.y);
 };
 
-/**	@desc Calculate the distance between this vector and another.
-*	@params {de.math.Vector} vec - The vector to find distance from.
+/**	@DEsc Calculate the distance between this vector and another.
+*	@params {DE.Math.Vector} vec - The vector to find distance from.
 * 	@returns {number} - Scalar representing the distance.
 */
-de.math.Vector.prototype.DistanceFrom = function(vec) {
+DE.Math.Vector.prototype.DistanceFrom = function(vec) {
 	vec = DE.Util.Unwrap(vec);
-	return new de.math.Vector(this.x - vec.x,this.y - vec.y).Length();
+	return new DE.Math.Vector(this.x - vec.x,this.y - vec.y).Length();
 };
 
-/** @desc Normalizes and optionally scales the vector.
+/** @DEsc Normalizes and optionally scales the vector.
 *	@param {number} [scalar=1] - The amount to scale the normalized vector.
-*	@returns {de.math.Vector} - this vector, normalized and scaled.
+*	@returns {DE.Math.Vector} - this vector, normalized and scaled.
 */
-de.math.Vector.prototype.Normalize = function(scalar) {	
+DE.Math.Vector.prototype.Normalize = function(scalar) {	
 	var length = this.Length();
 	var normalLength = length != 0 ? (1.0 / length) : 1;
 	this.x = this.x * normalLength;
@@ -105,64 +105,64 @@ de.math.Vector.prototype.Normalize = function(scalar) {
 	return this;
 };
 
-/** @desc Builds a perpendicular vector.
-*	@returns {de.math.Vector} - a perpendicular vector.
+/** @DEsc Builds a perpendicular vector.
+*	@returns {DE.Math.Vector} - a perpendicular vector.
 */
-de.math.Vector.prototype.Perp = function() {
-	return de.math.Vec2d(-this.y,this.x);
+DE.Math.Vector.prototype.Perp = function() {
+	return DE.Math.Vec2d(-this.y,this.x);
 };
 
-/** @desc Convenience Method to build a 2d vector.
+/** @DEsc Convenience Method to build a 2d vector.
 *	@param {number|object} x - The x component of the vector, or another object with x,y.
 *	@param {number} y - The y component of the vector.
-*	@returns {de.math.Vector} - a new vector.
+*	@returns {DE.Math.Vector} - a new vector.
 */
-de.math.Vec2d = function(x,y){
-	return new de.math.Vector(x,y);
+DE.Math.Vec2d = function(x,y){
+	return new DE.Math.Vector(x,y);
 }
 
-/** @desc Builds a vector from a degrees, used for game entities with only a rotation.
-*	@param {number} degrees - The degrees to build a heading vector from.
-*	@returns {de.math.Vector} - a unit vector rotated by degrees.
+/** @DEsc Builds a vector from a DEgrees, used for game entities with only a rotation.
+*	@param {number} DEgrees - The DEgrees to build a heading vector from.
+*	@returns {DE.Math.Vector} - a unit vector rotated by DEgrees.
 */
-de.math.HeadingVec = function(degrees){
-	var rads = de.math.DegToRad(degrees);
-	var x = de.math.CleanFloat(Math.cos(rads));
-	var y = de.math.CleanFloat(Math.sin(rads));
-	return de.math.Vec2d(x,y).Normalize();
+DE.Math.HeadingVec = function(DEgrees){
+	var rads = DE.Math.DEgToRad(DEgrees);
+	var x = DE.Math.CleanFloat(Math.cos(rads));
+	var y = DE.Math.CleanFloat(Math.sin(rads));
+	return DE.Math.Vec2d(x,y).Normalize();
 }
 
-/** @desc Adds two vectors without changing either one.
-*	@param {de.math.Vector} vec1
-*	@param {de.math.Vector} vec2 
-*	@returns {de.math.Vector} - a new vector representing the sum of the other two.
+/** @DEsc Adds two vectors without changing either one.
+*	@param {DE.Math.Vector} vec1
+*	@param {DE.Math.Vector} vec2 
+*	@returns {DE.Math.Vector} - a new vector representing the sum of the other two.
 */
-de.math.Vector.Add = function(vec1,vec2){
+DE.Math.Vector.Add = function(vec1,vec2){
 	vec1 = DE.Util.Unwrap(vec1);
 	vec2 = DE.Util.Unwrap(vec2);
 
-	return de.math.Vec2d((vec1.x + vec2.x), (vec1.y + vec2.y));
+	return DE.Math.Vec2d((vec1.x + vec2.x), (vec1.y + vec2.y));
 };
 
-/** @desc Subtracts two vectors without changing either one.
-*	@param {de.math.Vector} vec1
-*	@param {de.math.Vector} vec2 
-*	@returns {de.math.Vector} - a new vector representing the difference of the other two.
+/** @DEsc Subtracts two vectors without changing either one.
+*	@param {DE.Math.Vector} vec1
+*	@param {DE.Math.Vector} vec2 
+*	@returns {DE.Math.Vector} - a new vector representing the difference of the other two.
 */
-de.math.Vector.Sub = function(vec1,vec2){
+DE.Math.Vector.Sub = function(vec1,vec2){
 	vec1 = DE.Util.Unwrap(vec1);
 	vec2 = DE.Util.Unwrap(vec2);
 
-	return de.math.Vec2d((vec1.x - vec2.x), (vec1.y - vec2.y));
+	return DE.Math.Vec2d((vec1.x - vec2.x), (vec1.y - vec2.y));
 };
 
-/** @desc Build a normalized and optionally scaled form of a vector, without changing it.
-*	@param {de.math.Vector} vec - the vector to normalize.
+/** @DEsc Build a normalized and optionally scaled form of a vector, without changing it.
+*	@param {DE.Math.Vector} vec - the vector to normalize.
 *	@param {number} [scalar=1] - an optional scale.
-*	@returns {de.math.Vector} - a new vector, normalized and scaled.
+*	@returns {DE.Math.Vector} - a new vector, normalized and scaled.
 */
-de.math.Vector.Normalize = function(vec, scalar) {
-	var normalVec = de.math.Vec2d(vec.x,vec.y);
+DE.Math.Vector.Normalize = function(vec, scalar) {
+	var normalVec = DE.Math.Vec2d(vec.x,vec.y);
 	var length = normalVec.Length();
 	var normalLength = length != 0 ? (1.0 / length) : 1;
 
@@ -176,30 +176,30 @@ de.math.Vector.Normalize = function(vec, scalar) {
 	return normalVec;
 };
 
-/** @desc Converts a heading vector into a rotation in degrees.
-*	@param {de.math.Vector} heading - The vector to convert to degrees.
-*	@returns {number} degrees - The degrees representing the rotation of the vector from the world's x-axis.
+/** @DEsc Converts a heading vector into a rotation in DEgrees.
+*	@param {DE.Math.Vector} heading - The vector to convert to DEgrees.
+*	@returns {number} DEgrees - The DEgrees representing the rotation of the vector from the world's x-axis.
 */
-de.math.Vector.HeadingToDeg = function(heading){
-	var world = de.math.Vec2d(1,0);		
-	var normalized_heading = de.math.Vector.Normalize(heading);
-	var degrees = de.math.RadToDeg(Math.acos(world.Dot(normalized_heading)));	
+DE.Math.Vector.HeadingToDEg = function(heading){
+	var world = DE.Math.Vec2d(1,0);		
+	var normalized_heading = DE.Math.Vector.Normalize(heading);
+	var DEgrees = DE.Math.RadToDEg(Math.acos(world.Dot(normalized_heading)));	
 	
 	//dot product returns 0 to pi, fix over 180 problems.
 	if(heading.y < 0)
 	{
-		degrees = 360 - degrees
+		DEgrees = 360 - DEgrees
 	}; 
 	
-	return degrees;
+	return DEgrees;
 };
 
-/** @desc Converts a vector from world space to the entities local space.
-*	@param {de.math.Vector} vec - The vector to convert.
-*	@param {de.math.Vector} heading - The entities heading vector.
-*	@returns {de.math.Vector} local - The transformed vector.
+/** @DEsc Converts a vector from world space to the entities local space.
+*	@param {DE.Math.Vector} vec - The vector to convert.
+*	@param {DE.Math.Vector} heading - The entities heading vector.
+*	@returns {DE.Math.Vector} local - The transformed vector.
 */
-de.math.Vector.WorldToLocal = function(vec,heading){
+DE.Math.Vector.WorldToLocal = function(vec,heading){
 	//heading vec is used as X axis in local coords
 	//its perpendicular is used as the orthagonal y axis in the local coords.
 	//[x1,y1]
@@ -211,57 +211,57 @@ de.math.Vector.WorldToLocal = function(vec,heading){
 	var x = (vec.x * mat[0][0]) + (vec.y * mat[0][1]);
 	var y = (vec.x * mat[1][0]) + (vec.y * mat[1][1]);
 
-	return de.math.Vec2d(x,y);
+	return DE.Math.Vec2d(x,y);
 };
 
-/** @desc Transforms a vector from local space to world space.
-*	@param {de.math.Vector} vec - The vector to convert.
-*	@param {de.math.Vector} heading - The entities heading vector.
-*	@param {de.math.Vector} pos - The entities position vector.
-*	@returns {de.math.Vector} local - The transformed vector.
+/** @DEsc Transforms a vector from local space to world space.
+*	@param {DE.Math.Vector} vec - The vector to convert.
+*	@param {DE.Math.Vector} heading - The entities heading vector.
+*	@param {DE.Math.Vector} pos - The entities position vector.
+*	@returns {DE.Math.Vector} local - The transformed vector.
 */
-de.math.Vector.LocalToWorld = function(vec, heading, pos){	
-	var world = de.math.Vec2d(1,0);
-	var degrees = de.math.de.math.Vector.HeadingToDeg(headingVec);
+DE.Math.Vector.LocalToWorld = function(vec, heading, pos){	
+	var world = DE.Math.Vec2d(1,0);
+	var DEgrees = DE.Math.DE.Math.Vector.HeadingToDEg(headingVec);
 	
-	var inverse = de.math.de.math.Vector.WorldToLocal(de.math.HeadingVec(-degrees),world);	
+	var inverse = DE.Math.DE.Math.Vector.WorldToLocal(DE.Math.HeadingVec(-DEgrees),world);	
 	var perp = inverse.Perp();
 
 	var mat = [[inverse.x,perp.x],[inverse.y,perp.y]];
-	var x = de.math.CleanFloat((vec.x * mat[0][0]) + (vec.y * mat[0][1]));
-	var y = de.math.CleanFloat((vec.x * mat[1][0]) + (vec.y * mat[1][1]));
+	var x = DE.Math.CleanFloat((vec.x * mat[0][0]) + (vec.y * mat[0][1]));
+	var y = DE.Math.CleanFloat((vec.x * mat[1][0]) + (vec.y * mat[1][1]));
 
-	return de.math.Vec2d(x,y).Add(pos);
+	return DE.Math.Vec2d(x,y).Add(pos);
 };
 
-/** @desc Finds the midpoint of two vectors.
-*	@param {de.math.Vector} vec1
-*	@param {de.math.Vector} vec2
-*	@returns {de.math.Vector} midpoint - The midpoint of the two vectors.
+/** @DEsc Finds the midpoint of two vectors.
+*	@param {DE.Math.Vector} vec1
+*	@param {DE.Math.Vector} vec2
+*	@returns {DE.Math.Vector} midpoint - The midpoint of the two vectors.
 */
-de.math.Vector.MidPoint = function(vec1,vec2){
+DE.Math.Vector.MidPoint = function(vec1,vec2){
 	var x = (vec1.x + vec2.x) * 0.5;
 	var y = (vec1.y + vec2.y) * 0.5;
 	return DE.Vec2d(x, y);
 }
 
-de.math.Vector.HeadingToDegTest = function(){
+DE.Math.Vector.HeadingToDEgTest = function(){
 	for (var i = 0; i < 360; i++){
-		var x = de.math.CleanFloat(Math.cos(de.math.DegToRad(i)));
-		var y = de.math.CleanFloat(Math.sin(de.math.DegToRad(i)));
-		var heading = de.math.Vec2d(x,y);
-		var deg = de.math.de.math.Vector.HeadingToDeg(heading);
-		if(deg < i - 0.0001 || deg > i + 0.0001){
-			console.log("heading:",heading, "got:",deg," Expected:", i);
+		var x = DE.Math.CleanFloat(Math.cos(DE.Math.DEgToRad(i)));
+		var y = DE.Math.CleanFloat(Math.sin(DE.Math.DEgToRad(i)));
+		var heading = DE.Math.Vec2d(x,y);
+		var DEg = DE.Math.DE.Math.Vector.HeadingToDEg(heading);
+		if(DEg < i - 0.0001 || DEg > i + 0.0001){
+			console.log("heading:",heading, "got:",DEg," Expected:", i);
 		}
 	}
 };
 
-de.math.Vector.VecTest = function(){
+DE.Math.Vector.VecTest = function(){
 	var test = DE.Vec2d(1,0);
 	for (var i = 0; i <= 360; i+=5) {
-		var local = de.math.de.math.Vector.WorldToLocal(test,de.math.HeadingVec(i));
-		var world = de.math.de.math.Vector.LocalToWorld(local,de.math.HeadingVec(i),de.math.Vec2d(0,0));
+		var local = DE.Math.DE.Math.Vector.WorldToLocal(test,DE.Math.HeadingVec(i));
+		var world = DE.Math.DE.Math.Vector.LocalToWorld(local,DE.Math.HeadingVec(i),DE.Math.Vec2d(0,0));
 
 		if(world.x < test.x - .0001 || world.x > test.x + .0001){
 			console.log("AT: ",i, " Expected x to be:",test.x, "  Got:", world.x);

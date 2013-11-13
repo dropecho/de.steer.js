@@ -1,16 +1,16 @@
 /** @namespace */
-var de = de || {};
+var DE = DE || {};
 
 /** @namespace 
-*	@memberof de
+*	@memberof DE
 */
-de.math = de.math || {};
+DE.Math = DE.Math || {};
 
 /** @constant 
-*	@default Math.PI || 3.141592653
-*	@memberof de.math
+*	@DEfault Math.PI || 3.141592653
+*	@memberof DE.Math
 */
-de.math.PI = Math !== undefined ? Math.PI : 3.141592653;
+DE.Math.PI = Math !== undefined ? Math.PI : 3.141592653;
 
 /**	@function Clamp
 *	@param {number} number 	- The number to clamp.
@@ -18,9 +18,9 @@ de.math.PI = Math !== undefined ? Math.PI : 3.141592653;
 *	@param {number} max 	- The maximum number to output.
 *
 *	@returns {number} result - The clamped number.
-*	@memberof de.math
+*	@memberof DE.Math
 */
-de.math.Clamp = function(number,min,max){
+DE.Math.Clamp = function(number,min,max){
 	var c = Math.min(number,max); //clamp to current or max.
 	return Math.max(min,c); //clamp to min or current.
 };
@@ -30,52 +30,52 @@ de.math.Clamp = function(number,min,max){
 *	@param {number=} max 	- The maximum number to output.
 *
 *	@returns {number} result - The random number, optionally clamped.
-*	@memberof de.math
+*	@memberof DE.Math
 */
-de.math.Rand = function(min,max){
+DE.Math.Rand = function(min,max){
 	return min !== undefined 
-		? de.math.Clamp(Math.random()*max,min,max)
+		? DE.Math.Clamp(Math.random()*max,min,max)
 		: Math.random();
 }
 
 
 /** @function RandBool
 *	@returns {bool} result - A random true or false. 
-*	@memberof de.math
+*	@memberof DE.Math
 */ 
-de.math.RandBool = function(){
-	return de.math.Rand(0,1) > .5;
+DE.Math.RandBool = function(){
+	return DE.Math.Rand(0,1) > .5;
 }
 
-/** @function RadToDeg
-*	@desc Converts a number from radians to degrees.
+/** @function RadToDEg
+*	@DEsc Converts a number from radians to DEgrees.
 * 	@param {number} radians - The number in radians.
 *
-* 	@returns {number} degrees - The number in degrees.
-*	@memberof de.math
+* 	@returns {number} DEgrees - The number in DEgrees.
+*	@memberof DE.Math
 */
-de.math.RadToDeg = function(radians){
-	return de.math.CleanFloat((radians*180)/de.math.PI);
+DE.Math.RadToDEg = function(radians){
+	return DE.Math.CleanFloat((radians*180)/DE.Math.PI);
 }
 
-/** @function DegToRad
-*	@desc Converts a number from degrees to radians.
-* 	@param {number} radians - The number in degrees.
+/** @function DEgToRad
+*	@DEsc Converts a number from DEgrees to radians.
+* 	@param {number} radians - The number in DEgrees.
 *
-* 	@returns {number} degrees - The number in radians.
-*	@memberof de.math
+* 	@returns {number} DEgrees - The number in radians.
+*	@memberof DE.Math
 */
-de.math.DegToRad = function(degrees){
-	return de.math.CleanFloat((degrees*de.math.PI)/180);
+DE.Math.DEgToRad = function(DEgrees){
+	return DE.Math.CleanFloat((DEgrees*DE.Math.PI)/180);
 }
 
 /** @function CleanFloat
-*	@desc Forces a float to fixed(7)
+*	@DEsc Forces a float to fixed(7)
 * 	@param {number|string} num - The number to clean, if string, its parsed into a float.
 *
-* 	@returns {number} degrees - Cleaned number.
-*	@memberof de.math
+* 	@returns {number} DEgrees - Cleaned number.
+*	@memberof DE.Math
 */
-de.math.CleanFloat = function(num){
+DE.Math.CleanFloat = function(num){
 	return parseFloat(num.toFixed(7));
 }

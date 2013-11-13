@@ -1,114 +1,114 @@
 /** @file Implementation of behaviors on entity. */
 
-var de = de || {};
-de.steer = de.steer || {};
+var DE = DE || {};
+DE.Steer = DE.Steer || {};
 
 /**	@constructor
-*	@param {desteerEntity} entity
+*	@param {DEsteerEntity} entity
 */
-de.steer.EntityBehaviors = function(){
+DE.Steer.EntityBehaviors = function(){
 	function EntityBehaviors(entity){
 		this.entity = entity;		
-		this.de_wander_target = de.Math.Vec2d(); //just makes wander easier to deal with.
+		this.DE_wanDEr_target = DE.Math.Vec2d(); //just makes wanDEr easier to DEal with.
 	};
 
 	return EntityBehaviors;
 }();
 
-/** @desc Converts the input vector to the entities local space
-	@param {de.math.Vector} vec - The world vector.
-	@returns {de.math.Vector} - The local vector.
+/** @DEsc Converts the input vector to the entities local space
+	@param {DE.Math.Vector} vec - The world vector.
+	@returns {DE.Math.Vector} - The local vector.
 */
-de.steer.EntityBehaviors.prototype.ToLocal = function(vec){
-	return de.Math.Vector.WorldToLocal(vec,this.entity.de_heading());
+DE.Steer.EntityBehaviors.prototype.ToLocal = function(vec){
+	return DE.Math.Vector.WorldToLocal(vec,this.entity.DE_heading());
 };
 
-de.steer.EntityBehaviors.prototype.Align = function(first_argument) {
+DE.Steer.EntityBehaviors.prototype.Align = function(first_argument) {
 	// body...
 };
 
-de.steer.EntityBehaviors.prototype.Arrive = function(targetEntity,decelForce) {
-	var pos = this.entity.de_pos(),
-		target_pos = targetEntity.de_pos(),
-		max_speed = this.entity.de_max_speed();
+DE.Steer.EntityBehaviors.prototype.Arrive = function(targetEntity,DEcelForce) {
+	var pos = this.entity.DE_pos(),
+		target_pos = targetEntity.DE_pos(),
+		max_speed = this.entity.DE_max_speed();
 
-	return de.steer.Behaviors.Arrive(pos, target_pos, max_speed, decelForce);
+	return DE.Steer.Behaviors.Arrive(pos, target_pos, max_speed, DEcelForce);
 };	
 
-de.steer.EntityBehaviors.prototype.Cohese = function(neighbors) {
-	var pos = this.entity.de_pos(),
-		max_speed = this.entity.de_max_speed(),
+DE.Steer.EntityBehaviors.prototype.Cohese = function(neighbors) {
+	var pos = this.entity.DE_pos(),
+		max_speed = this.entity.DE_max_speed(),
 		neighborPositions = [];
 
 	for(var i = 0, l = neighbors.length; i < l; i++){
-		neighborPositions.push(neighbors.de_pos());
+		neighborPositions.push(neighbors.DE_pos());
 	}
 
-	return de.steer.Behaviors.Cohese(pos, neighborPositions, max_speed);
+	return DE.Steer.Behaviors.Cohese(pos, neighborPositions, max_speed);
 };
 
-de.steer.EntityBehaviors.prototype.Evade = function(targetEntity) {
-	var pos = this.entity.de_pos(),
-		max_speed = this.entity.de_max_speed(),
-		target_pos = target.de_pos(),
-		target_heading = target.de_heading(),
-		target_vel = target.de_max_speed(); //this is not correct, but should work for now.
+DE.Steer.EntityBehaviors.prototype.EvaDE = function(targetEntity) {
+	var pos = this.entity.DE_pos(),
+		max_speed = this.entity.DE_max_speed(),
+		target_pos = target.DE_pos(),
+		target_heading = target.DE_heading(),
+		target_vel = target.DE_max_speed(); //this is not correct, but should work for now.
 
-	return de.steer.Behaviors.Evade(pos, target_pos, max_speed, target_heading, target_vel);
+	return DE.Steer.Behaviors.EvaDE(pos, target_pos, max_speed, target_heading, target_vel);
 };
 
-de.steer.EntityBehaviors.prototype.Flee = function(targetEntity, fleeRadius) {
-	var pos = this.entity.de_pos(),
-		target_pos = target.de_pos(),
-		max_speed = this.entity.de_max_speed();
+DE.Steer.EntityBehaviors.prototype.Flee = function(targetEntity, fleeRadius) {
+	var pos = this.entity.DE_pos(),
+		target_pos = target.DE_pos(),
+		max_speed = this.entity.DE_max_speed();
 
-	return de.steer.Behaviors.Flee(pos, target, max_speed, fleeRadius);
+	return DE.Steer.Behaviors.Flee(pos, target, max_speed, fleeRadius);
 };
 
-de.steer.EntityBehaviors.prototype.Hide = function(first_argument) {
+DE.Steer.EntityBehaviors.prototype.HiDE = function(first_argument) {
 	// body...
 };
 
-de.steer.EntityBehaviors.prototype.Interpose = function(first_argument) {
+DE.Steer.EntityBehaviors.prototype.Interpose = function(first_argument) {
 	// body...
 };
 
-de.steer.EntityBehaviors.prototype.ObstacleAvoid = function(first_argument) {
+DE.Steer.EntityBehaviors.prototype.ObstacleAvoid = function(first_argument) {
 	// body...
 };
 
-de.steer.EntityBehaviors.prototype.Pursuit = function(targetEntity) {
-	var pos = this.entity.de_pos(),
-		max_speed = this.entity.de_max_speed(),
-		target_pos = target.de_pos(),
-		target_heading = target.de_heading(),
-		target_vel = target.de_max_speed(); //this is not correct, but should work for now.
+DE.Steer.EntityBehaviors.prototype.Pursuit = function(targetEntity) {
+	var pos = this.entity.DE_pos(),
+		max_speed = this.entity.DE_max_speed(),
+		target_pos = target.DE_pos(),
+		target_heading = target.DE_heading(),
+		target_vel = target.DE_max_speed(); //this is not correct, but should work for now.
 
-	return de.steer.Behaviors.Pursuit(pos, target_pos, max_speed, target_heading, target_vel);
+	return DE.Steer.Behaviors.Pursuit(pos, target_pos, max_speed, target_heading, target_vel);
 };
 
-de.steer.EntityBehaviors.prototype.Seek = function(targetEntity){
-	var pos = this.entity.de_pos(),
-		max_speed = this.entity.de_max_speed(),
-		target = targetEntity.de_pos();
+DE.Steer.EntityBehaviors.prototype.Seek = function(targetEntity){
+	var pos = this.entity.DE_pos(),
+		max_speed = this.entity.DE_max_speed(),
+		target = targetEntity.DE_pos();
 
-	return de.steer.Behaviors.Seek(pos, target, max_speed);
+	return DE.Steer.Behaviors.Seek(pos, target, max_speed);
 };
-de.steer.EntityBehaviors.prototype.Seperation = function(neighbors) {	    
-	var pos = this.entity.de_pos(),
+DE.Steer.EntityBehaviors.prototype.Seperation = function(neighbors) {	    
+	var pos = this.entity.DE_pos(),
 		neighborPositions = [];
 
 	for(var i = 0, l = neighbors.length; i < l; i++){
-		neighborPositions.push(neighbors.de_pos());
+		neighborPositions.push(neighbors.DE_pos());
 	}
 
-	return de.steer.Behaviors.Seperation(pos, neighborPositions);
+	return DE.Steer.Behaviors.Seperation(pos, neighborPositions);
 };	
 
-de.steer.EntityBehaviors.prototype.Wander = function() {
-	var pos = this.entity.de_pos(),
-		target = this.de_wander_target,
-		heading = this.entity.de_heading();
+DE.Steer.EntityBehaviors.prototype.WanDEr = function() {
+	var pos = this.entity.DE_pos(),
+		target = this.DE_wanDEr_target,
+		heading = this.entity.DE_heading();
 
-	return de.steer.Behaviors.Wander(pos,target,heading);
+	return DE.Steer.Behaviors.WanDEr(pos,target,heading);
 };

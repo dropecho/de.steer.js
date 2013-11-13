@@ -13,7 +13,7 @@ var handlePlayerKeys = function(){
   if(keys[KEY_LEFT])  { player.rotate(-SPEED,true); }
   if(keys[KEY_RIGHT]) { player.rotate(SPEED,true);}  
     
-  player.xy(player.Steering.ToLocal(trans),true);    
+  player.xy(player.Steering.ToLocal(trans),true);
 };
 
 var initEntities = function(){  
@@ -28,10 +28,10 @@ var updatePlayer = function(){
 }
 
 var updateEnemy = function(){  
-  var desiredVel = enemy.Steering.Wander();
+  //var desiredVel = enemy.Steering.Wander();
 
-  enemy.rotate(DE.Math.Vector.HeadingToDeg(desiredVel));
-  enemy.xy(desiredVel,true);  
+  //enemy.rotate(DE.Math.Vector.HeadingToDeg(desiredVel));
+  //enemy.xy(desiredVel,true);  
 };
 
 //Main game loop.

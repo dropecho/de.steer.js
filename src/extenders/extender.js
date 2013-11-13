@@ -4,28 +4,28 @@ DE.Steer.Extenders = DE.Steer.Extenders || {};
 
 DE.Steer.Extender = function(){
 	function checkExtend(entity){		
-		if(entity.de_pos === undefined){
-			throw new DE.Errors.ConversionError({property: "entity.de_pos", message: "is undefined. You must set the position getter in the converter."});
+		if(entity.DE_pos === undefined){
+			throw new DE.Errors.ConversionError({property: "entity.DE_pos", message: "is undefined. You must set the position getter in the converter."});
 		}
 
-		if(typeof entity.de_pos !== 'function'){
-			throw new DE.Errors.ConversionError({property: "entity.de_pos", message: "is not a function. You must set the position getter in the converter."});	
+		if(typeof entity.DE_pos !== 'function'){
+			throw new DE.Errors.ConversionError({property: "entity.DE_pos", message: "is not a function. You must set the position getter in the converter."});	
 		}
 
-		if(entity.de_heading === undefined){
-			throw new DE.Errors.ConversionError({property: "entity.de_heading", message:"is undefined. You must set the heading getter in the converter."});
+		if(entity.DE_heading === undefined){
+			throw new DE.Errors.ConversionError({property: "entity.DE_heading", message:"is undefined. You must set the heading getter in the converter."});
 		}
 
-		if(typeof entity.de_heading !== 'function'){
-			throw new DE.Errors.ConversionError({property: "entity.de_heading", message: "is not a function. You must set the heading getter in the converter."});	
+		if(typeof entity.DE_heading !== 'function'){
+			throw new DE.Errors.ConversionError({property: "entity.DE_heading", message: "is not a function. You must set the heading getter in the converter."});	
 		}
 
-		if(entity.de_max_speed === undefined){
-			throw new DE.Errors.ConversionError({property: "entity.de_max_speed ", message:"is undefined. You must set the max_speed getter in the converter."});
+		if(entity.DE_max_speed === undefined){
+			throw new DE.Errors.ConversionError({property: "entity.DE_max_speed ", message:"is undefined. You must set the max_speed getter in the converter."});
 		}
 
-		if(typeof entity.de_max_speed !== 'function'){
-			throw new DE.Errors.ConversionError({property: "entity.de_max_speed", message: "is not a function. You must set the max_speed getter in the converter."});	
+		if(typeof entity.DE_max_speed !== 'function'){
+			throw new DE.Errors.ConversionError({property: "entity.DE_max_speed", message: "is not a function. You must set the max_speed getter in the converter."});	
 		}		
 	};
 
