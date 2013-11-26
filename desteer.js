@@ -1,11 +1,7 @@
 var DE = DE || {};
 DE.Steer = DE.Steer || {};
-DE.Steer.Behaviors = function() {
-  function Behaviors() {
-  }
-  return Behaviors
-}();
-DE.Steer.Behaviors.prototype.Align = function(headingVec, neighborHeadings) {
+DE.Steer.Behaviors = {};
+DE.Steer.Behaviors.Align = function(headingVec, neighborHeadings) {
   var averageHeading = DE.Math.Vec2d();
   var neighborCount = neighborHeadings.length;
   for(var i = 0;i < neighborCount;++i) {
@@ -17,7 +13,7 @@ DE.Steer.Behaviors.prototype.Align = function(headingVec, neighborHeadings) {
   }
   return averageHeading
 };
-DE.Steer.Behaviors.prototype.Arrive = function(pos, target, max_speed, DEcelForce) {
+DE.Steer.Behaviors.Arrive = function(pos, target, max_speed, DEcelForce) {
   DEcelForce = DEcelForce || 5;
   var distToTarget = pos.DistanceFrom(target);
   if(distToTarget > 0) {
@@ -27,7 +23,7 @@ DE.Steer.Behaviors.prototype.Arrive = function(pos, target, max_speed, DEcelForc
   }
   return DE.Math.Vec2d(0, 0)
 };
-DE.Steer.Behaviors.prototype.Cohese = function(pos, neighborPositions, max_speed) {
+DE.Steer.Behaviors.Cohese = function(pos, neighborPositions, max_speed) {
   var centerOfMass = DE.Math.Vec2d(0, 0);
   var neighborCount = neighborPositions.length;
   for(var i = 0;i < neighborCount;i++) {
@@ -39,37 +35,37 @@ DE.Steer.Behaviors.prototype.Cohese = function(pos, neighborPositions, max_speed
   }
   return DE.Math.Vec2d(0, 0)
 };
-DE.Steer.Behaviors.prototype.EvaDE = function(pos, target, max_speed, targetHeadingDEg, targetCurrentSpeed) {
+DE.Steer.Behaviors.Evade = function(pos, target, max_speed, targetHeadingDEg, targetCurrentSpeed) {
   var toTarget = DE.Math.Vector.Sub(target, pos);
-  var heading = DE.Math.HeadingVec(targetHeadingDEg);
+  var heading = DE.Math.HeadingVec(targetHeadingDeg);
   var targetCurrentSpeed = targetCurrentSpeed || 60;
   var lookAhead = toTarget.Length() / (max_speed + targetCurrentSpeed);
   var estimatedTargetPos = DE.Math.Vector.Add(target, heading.Normalize(lookAhead));
   return this.Flee(pos, estimatedTargetPos)
 };
-DE.Steer.Behaviors.prototype.Flee = function(pos, target, max_speed, fleeRadius) {
+DE.Steer.Behaviors.Flee = function(pos, target, max_speed, fleeRadius) {
   var shouldFlee = fleeRadius === undefined || fleeRadius === -1 || target.DistanceFrom(pos) <= fleeRadius;
   var flee = DE.Math.Vector.Sub(pos, target).Normalize(max_speed);
   return shouldFlee ? flee : DE.Math.Vec2d(0, 0)
 };
-DE.Steer.Behaviors.prototype.HiDE = function(first_argument) {
+DE.Steer.Behaviors.Hide = function(first_argument) {
 };
-DE.Steer.Behaviors.prototype.Interpose = function(pos, target_1, target_2, max_speed) {
+DE.Steer.Behaviors.Interpose = function(pos, target_1, target_2, max_speed) {
   var midpoint = DE.Math.Vector.MidPoint(target_1, target_2);
   return Arrive(pos, midpoint, max_speed)
 };
-DE.Steer.Behaviors.prototype.ObstacleAvoid = function(first_argument) {
+DE.Steer.Behaviors.ObstacleAvoid = function(first_argument) {
 };
-DE.Steer.Behaviors.prototype.Pursuit = function(pos, target, max_speed, targetHeading, targetCurrentSpeed) {
+DE.Steer.Behaviors.Pursuit = function(pos, target, max_speed, targetHeading, targetCurrentSpeed) {
   var toTarget = DE.Math.Vector.Sub(target, pos), heading = targetHeading instanceof DE.Math.Vector ? targetHeading : DE.Math.HeadingVec(targetHeadingDEg), targetCurrentSpeed = targetCurrentSpeed || 60;
   var lookAhead = toTarget.Length() / (max_speed + targetCurrentSpeed);
   var estimatedTargetPos = DE.Math.Vector.Add(target, heading.Normalize(lookAhead));
   return this.Seek(pos, estimatedTargetPos)
 };
-DE.Steer.Behaviors.prototype.Seek = function(pos, target, max_speed) {
+DE.Steer.Behaviors.Seek = function(pos, target, max_speed) {
   return DE.Math.Vector.Sub(target, pos).Normalize(max_speed)
 };
-DE.Steer.Behaviors.prototype.Seperation = function(pos, neighborPositions) {
+DE.Steer.Behaviors.Seperation = function(pos, neighborPositions) {
   var seperationForce = DE.Math.Vec2d(0, 0), neighborCount = neighborPositions.length;
   for(var i = 0;i < neighborCount;i++) {
     var awayFromNeighbor = DE.Math.Vector.Sub(pos, neighborPositions[i]);
@@ -78,12 +74,12 @@ DE.Steer.Behaviors.prototype.Seperation = function(pos, neighborPositions) {
   }
   return seperationForce
 };
-DE.Steer.Behaviors.prototype.WanDEr = function(pos, target, headingVec) {
+DE.Steer.Behaviors.Wander = function(pos, target, headingVec) {
   var radius = 1, dist = 10, jitter = 1;
-  var wanDErx = DE.Math.Rand(-1, 1);
-  var wanDEry = DE.Math.Rand(-1, 1);
-  var wanDErVec = DE.Math.Vec2d(wanDErx, wanDEry).Normalize();
-  target.Add(wanDErVec).Normalize(radius);
+  var wanderx = DE.Math.Rand(-1, 1);
+  var wandery = DE.Math.Rand(-1, 1);
+  var wanderVec = DE.Math.Vec2d(wanderx, wandery).Normalize();
+  target.Add(wanderVec).Normalize(radius);
   var localTarget = DE.Math.Vector.Add(target, DE.Math.Vec2d(dist, 0));
   var targetWorld = DE.Math.Vector.LocalToWorld(localTarget, headingVec, pos);
   return this.Seek(pos, targetWorld, 1)
@@ -93,7 +89,7 @@ DE.Steer = DE.Steer || {};
 DE.Steer.EntityBehaviors = function() {
   function EntityBehaviors(entity) {
     this.entity = entity;
-    this.DE_wanDEr_target = DE.Math.Vec2d()
+    this.DE_wander_target = DE.Math.Vec2d()
   }
   return EntityBehaviors
 }();
@@ -113,9 +109,9 @@ DE.Steer.EntityBehaviors.prototype.Cohese = function(neighbors) {
   }
   return DE.Steer.Behaviors.Cohese(pos, neighborPositions, max_speed)
 };
-DE.Steer.EntityBehaviors.prototype.EvaDE = function(targetEntity) {
+DE.Steer.EntityBehaviors.prototype.Evade = function(targetEntity) {
   var pos = this.entity.DE_pos(), max_speed = this.entity.DE_max_speed(), target_pos = target.DE_pos(), target_heading = target.DE_heading(), target_vel = target.DE_max_speed();
-  return DE.Steer.Behaviors.EvaDE(pos, target_pos, max_speed, target_heading, target_vel)
+  return DE.Steer.Behaviors.Evade(pos, target_pos, max_speed, target_heading, target_vel)
 };
 DE.Steer.EntityBehaviors.prototype.Flee = function(targetEntity, fleeRadius) {
   var pos = this.entity.DE_pos(), target_pos = target.DE_pos(), max_speed = this.entity.DE_max_speed();
@@ -142,9 +138,9 @@ DE.Steer.EntityBehaviors.prototype.Seperation = function(neighbors) {
   }
   return DE.Steer.Behaviors.Seperation(pos, neighborPositions)
 };
-DE.Steer.EntityBehaviors.prototype.WanDEr = function() {
-  var pos = this.entity.DE_pos(), target = this.DE_wanDEr_target, heading = this.entity.DE_heading();
-  return DE.Steer.Behaviors.WanDEr(pos, target, heading)
+DE.Steer.EntityBehaviors.prototype.Wander = function() {
+  var pos = this.entity.DE_pos(), target = this.DE_wander_target, heading = this.entity.DE_heading();
+  return DE.Steer.Behaviors.Wander(pos, target, heading)
 };
 var DE = DE || {};
 DE.Steer = DE.Steer || {};
@@ -222,10 +218,10 @@ DE.Math.Rand = function(min, max) {
 DE.Math.RandBool = function() {
   return DE.Math.Rand(0, 1) > 0.5
 };
-DE.Math.RadToDEg = function(radians) {
+DE.Math.RadToDeg = function(radians) {
   return DE.Math.CleanFloat(radians * 180 / DE.Math.PI)
 };
-DE.Math.DEgToRad = function(DEgrees) {
+DE.Math.DegToRad = function(DEgrees) {
   return DE.Math.CleanFloat(DEgrees * DE.Math.PI / 180)
 };
 DE.Math.CleanFloat = function(num) {
@@ -293,8 +289,8 @@ DE.Math.Vector.prototype.Perp = function() {
 DE.Math.Vec2d = function(x, y) {
   return new DE.Math.Vector(x, y)
 };
-DE.Math.HeadingVec = function(DEgrees) {
-  var rads = DE.Math.DEgToRad(DEgrees);
+DE.Math.HeadingVec = function(degrees) {
+  var rads = DE.Math.DegToRad(degrees);
   var x = DE.Math.CleanFloat(Math.cos(rads));
   var y = DE.Math.CleanFloat(Math.sin(rads));
   return DE.Math.Vec2d(x, y).Normalize()
@@ -320,14 +316,14 @@ DE.Math.Vector.Normalize = function(vec, scalar) {
   }
   return normalVec
 };
-DE.Math.Vector.HeadingToDEg = function(heading) {
+DE.Math.Vector.HeadingToDeg = function(heading) {
   var world = DE.Math.Vec2d(1, 0);
   var normalized_heading = DE.Math.Vector.Normalize(heading);
-  var DEgrees = DE.Math.RadToDEg(Math.acos(world.Dot(normalized_heading)));
+  var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(normalized_heading)));
   if(heading.y < 0) {
-    DEgrees = 360 - DEgrees
+    degrees = 360 - degrees
   }
-  return DEgrees
+  return degrees
 };
 DE.Math.Vector.WorldToLocal = function(vec, heading) {
   var perp = heading.Perp();
@@ -338,8 +334,8 @@ DE.Math.Vector.WorldToLocal = function(vec, heading) {
 };
 DE.Math.Vector.LocalToWorld = function(vec, heading, pos) {
   var world = DE.Math.Vec2d(1, 0);
-  var DEgrees = DE.Math.DE.Math.Vector.HeadingToDEg(headingVec);
-  var inverse = DE.Math.DE.Math.Vector.WorldToLocal(DE.Math.HeadingVec(-DEgrees), world);
+  var degrees = DE.Math.Vector.HeadingToDeg(heading);
+  var inverse = DE.Math.Vector.WorldToLocal(DE.Math.HeadingVec(-degrees), world);
   var perp = inverse.Perp();
   var mat = [[inverse.x, perp.x], [inverse.y, perp.y]];
   var x = DE.Math.CleanFloat(vec.x * mat[0][0] + vec.y * mat[0][1]);
@@ -351,12 +347,12 @@ DE.Math.Vector.MidPoint = function(vec1, vec2) {
   var y = (vec1.y + vec2.y) * 0.5;
   return DE.Vec2d(x, y)
 };
-DE.Math.Vector.HeadingToDEgTest = function() {
+DE.Math.Vector.HeadingToDegTest = function() {
   for(var i = 0;i < 360;i++) {
     var x = DE.Math.CleanFloat(Math.cos(DE.Math.DEgToRad(i)));
     var y = DE.Math.CleanFloat(Math.sin(DE.Math.DEgToRad(i)));
     var heading = DE.Math.Vec2d(x, y);
-    var DEg = DE.Math.DE.Math.Vector.HeadingToDEg(heading);
+    var DEg = DE.Math.DE.Math.Vector.HeadingToDeg(heading);
     if(DEg < i - 1E-4 || DEg > i + 1E-4) {
       console.log("heading:", heading, "got:", DEg, " Expected:", i)
     }

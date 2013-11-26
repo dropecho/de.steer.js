@@ -54,7 +54,7 @@ DE.Math.RandBool = function(){
 * 	@returns {number} DEgrees - The number in DEgrees.
 *	@memberof DE.Math
 */
-DE.Math.RadToDEg = function(radians){
+DE.Math.RadToDeg = function(radians){
 	return DE.Math.CleanFloat((radians*180)/DE.Math.PI);
 }
 
@@ -65,7 +65,7 @@ DE.Math.RadToDEg = function(radians){
 * 	@returns {number} DEgrees - The number in radians.
 *	@memberof DE.Math
 */
-DE.Math.DEgToRad = function(DEgrees){
+DE.Math.DegToRad = function(DEgrees){
 	return DE.Math.CleanFloat((DEgrees*DE.Math.PI)/180);
 }
 

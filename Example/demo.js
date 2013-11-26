@@ -1,4 +1,3 @@
-
 //helpers
 var player, enemy;
 var target = DE.Math.Vec2d(0,0);
@@ -17,6 +16,7 @@ var handlePlayerKeys = function(){
 };
 
 var initEntities = function(){  
+  
   player = DE.Steer.Extender.Extend($("#player"),"GameQuery");
   enemy = DE.Steer.Extender.Extend($("#enemy"),"GameQuery");
 
@@ -28,16 +28,16 @@ var updatePlayer = function(){
 }
 
 var updateEnemy = function(){  
-  //var desiredVel = enemy.Steering.Wander();
+  var desiredVel = enemy.Steering.Wander();
 
-  //enemy.rotate(DE.Math.Vector.HeadingToDeg(desiredVel));
-  //enemy.xy(desiredVel,true);  
+  enemy.rotate(DE.Math.Vector.HeadingToDeg(desiredVel));
+  enemy.xy(desiredVel,true);  
 };
 
 //Main game loop.
 var mainLoop = function(){  
   updatePlayer();
-  updateEnemy();
+  updateEnemy();  
 };
 
 $(document).ready(function(){
@@ -52,6 +52,7 @@ $(document).ready(function(){
       .end()
     .registerCallback(mainLoop,REFRESH_RATE)
     .startGame();
+
     initEntities();
 });
 

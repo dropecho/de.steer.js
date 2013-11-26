@@ -4,11 +4,7 @@ var DE = DE || {};
 DE.Steer = DE.Steer || {};
 
 /**	@constructor */
-DE.Steer.Behaviors = function(){
-	function Behaviors(){				
-	};
-	return Behaviors;
-}();
+DE.Steer.Behaviors = {};
 
 /** 
 *	@DEsc Builds a force to align to the average heading of the neighbors.
@@ -16,7 +12,7 @@ DE.Steer.Behaviors = function(){
 *	@param {Array<DE.Math.Vector>} neighborHeadings - Heading vectors of the entities neighbors.
 *	@returns {DE.Math.Vector} - steering force.
 */
-DE.Steer.Behaviors.prototype.Align = function(headingVec, neighborHeadings) {		
+DE.Steer.Behaviors.Align = function(headingVec, neighborHeadings) {		
 	var averageHeading = DE.Math.Vec2d(); 
 	var neighborCount = neighborHeadings.length; 
 	
@@ -40,7 +36,7 @@ DE.Steer.Behaviors.prototype.Align = function(headingVec, neighborHeadings) {
 *	@param {number} [DEcelForce=5]	- A tweakable value that effects the speed the entity will slow.
 *	@returns {DE.Math.Vector} - steering force.
 */
-DE.Steer.Behaviors.prototype.Arrive = function(pos,target,max_speed,DEcelForce) {
+DE.Steer.Behaviors.Arrive = function(pos,target,max_speed,DEcelForce) {
 	DEcelForce = DEcelForce || 5;
 	var distToTarget = pos.DistanceFrom(target);
 	
@@ -60,7 +56,7 @@ DE.Steer.Behaviors.prototype.Arrive = function(pos,target,max_speed,DEcelForce) 
 *	@param {number} max_speed 		- The entities max_speed.
 *	@returns {DE.Math.Vector} - steering force.
 */
-DE.Steer.Behaviors.prototype.Cohese = function(pos,neighborPositions,max_speed) {
+DE.Steer.Behaviors.Cohese = function(pos,neighborPositions,max_speed) {
 	var centerOfMass = DE.Math.Vec2d(0,0);
 	var neighborCount = neighborPositions.length;
 
@@ -85,9 +81,9 @@ DE.Steer.Behaviors.prototype.Cohese = function(pos,neighborPositions,max_speed) 
 *	@param {DE.Math.Vector} targetCurrentSpeed 	- The targets current speed.
 *	@returns {DE.Math.Vector} 		- steering force.
 */
-DE.Steer.Behaviors.prototype.EvaDE = function(pos,target,max_speed,targetHeadingDEg, targetCurrentSpeed) {
+DE.Steer.Behaviors.Evade = function(pos,target,max_speed,targetHeadingDEg, targetCurrentSpeed) {
 	var toTarget = DE.Math.Vector.Sub(target,pos);
-	var heading = DE.Math.HeadingVec(targetHeadingDEg);			
+	var heading = DE.Math.HeadingVec(targetHeadingDeg);			
 	var targetCurrentSpeed = targetCurrentSpeed || 60;
 
 	var lookAhead = toTarget.Length() / (max_speed + targetCurrentSpeed);		
@@ -104,7 +100,7 @@ DE.Steer.Behaviors.prototype.EvaDE = function(pos,target,max_speed,targetHeading
 *	@param {number} [fleeRadius=-1]	- The radius which triggers a flee response.
 *	@returns {DE.Math.Vector} 		- steering force.
 */
-DE.Steer.Behaviors.prototype.Flee = function(pos,target,max_speed,fleeRadius) {
+DE.Steer.Behaviors.Flee = function(pos,target,max_speed,fleeRadius) {
 	var shouldFlee =(fleeRadius === undefined || fleeRadius === -1 || target.DistanceFrom(pos) <= fleeRadius);
 	
 	var flee = DE.Math.Vector.Sub(pos,target).Normalize(max_speed); //Get toTarget vec, scale to max max_speed.
@@ -114,7 +110,7 @@ DE.Steer.Behaviors.prototype.Flee = function(pos,target,max_speed,fleeRadius) {
 /** @DEsc Builds a force to hiDE from a target behind obstacles.
 *	@todo Implement this.
 */
-DE.Steer.Behaviors.prototype.HiDE = function(first_argument) {
+DE.Steer.Behaviors.Hide = function(first_argument) {
 	// body...
 };
 
@@ -126,7 +122,7 @@ DE.Steer.Behaviors.prototype.HiDE = function(first_argument) {
 *	@param {number} max_speed 			- The entities max_speed.
 *	@returns {DE.Math.Vector} 			- steering force.
 */
-DE.Steer.Behaviors.prototype.Interpose = function(pos, target_1, target_2, max_speed) {		
+DE.Steer.Behaviors.Interpose = function(pos, target_1, target_2, max_speed) {		
 	var midpoint = DE.Math.Vector.MidPoint(target_1,target_2);
 	return Arrive(pos, midpoint, max_speed);
 };
@@ -135,7 +131,7 @@ DE.Steer.Behaviors.prototype.Interpose = function(pos, target_1, target_2, max_s
 /** @DEsc Builds a force to avoid obstacles.
 *	@todo Implement this.
 */
-DE.Steer.Behaviors.prototype.ObstacleAvoid = function(first_argument) {
+DE.Steer.Behaviors.ObstacleAvoid = function(first_argument) {
 	// body...
 };
 
@@ -146,7 +142,7 @@ DE.Steer.Behaviors.prototype.ObstacleAvoid = function(first_argument) {
 *	@param {number} max_speed 		- The entities max_speed.
 *	@returns {DE.Math.Vector} 		- steering force.
 */
-DE.Steer.Behaviors.prototype.Pursuit = function(pos, target, max_speed, targetHeading, targetCurrentSpeed) {
+DE.Steer.Behaviors.Pursuit = function(pos, target, max_speed, targetHeading, targetCurrentSpeed) {
 	var toTarget = DE.Math.Vector.Sub(target,pos),
 		heading = (targetHeading instanceof DE.Math.Vector) ? targetHeading : DE.Math.HeadingVec(targetHeadingDEg),
 		targetCurrentSpeed = targetCurrentSpeed || 60;
@@ -164,7 +160,7 @@ DE.Steer.Behaviors.prototype.Pursuit = function(pos, target, max_speed, targetHe
 *	@param {number} max_speed 		- The entities max_speed.
 *	@returns {DE.Math.Vector} 		- steering force.
 */
-DE.Steer.Behaviors.prototype.Seek = function(pos, target, max_speed) {						
+DE.Steer.Behaviors.Seek = function(pos, target, max_speed) {						
 	return DE.Math.Vector.Sub(target,pos).Normalize(max_speed);
 };
 
@@ -174,7 +170,7 @@ DE.Steer.Behaviors.prototype.Seek = function(pos, target, max_speed) {
 *	@param {Array<DE.Math.Vector>} target 	- The targets position.
 *	@returns {DE.Math.Vector} 				- steering force.
 */
-DE.Steer.Behaviors.prototype.Seperation = function(pos, neighborPositions) {	
+DE.Steer.Behaviors.Seperation = function(pos, neighborPositions) {	
     var seperationForce = DE.Math.Vec2d(0,0),
     	neighborCount = neighborPositions.length;
     
@@ -195,16 +191,16 @@ DE.Steer.Behaviors.prototype.Seperation = function(pos, neighborPositions) {
 *	@param {DE.Math.Vector} headingVec 	- The entities heading vector.
 *	@returns {DE.Math.Vector} 		- steering force.
 */
-DE.Steer.Behaviors.prototype.WanDEr = function(pos, target, headingVec) {
+DE.Steer.Behaviors.Wander = function(pos, target, headingVec) {
 	var radius = 1,
 		dist = 10,
 		jitter = 1;
 
-	var wanDErx = DE.Math.Rand(-1,1);
-	var wanDEry = DE.Math.Rand(-1,1);
-	var wanDErVec = DE.Math.Vec2d(wanDErx,wanDEry).Normalize();
+	var wanderx = DE.Math.Rand(-1,1);
+	var wandery = DE.Math.Rand(-1,1);
+	var wanderVec = DE.Math.Vec2d(wanderx,wandery).Normalize();
 	
-	target.Add(wanDErVec).Normalize(radius); //Add jitter and scale to radius.
+	target.Add(wanderVec).Normalize(radius); //Add jitter and scale to radius.
 	
 	var localTarget = DE.Math.Vector.Add(target,DE.Math.Vec2d(dist,0)); //Move X units in front of pos in local coords.
 	var targetWorld = DE.Math.Vector.LocalToWorld(localTarget, headingVec, pos);

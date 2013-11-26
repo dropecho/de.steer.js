@@ -125,8 +125,8 @@ DE.Math.Vec2d = function(x,y){
 *	@param {number} DEgrees - The DEgrees to build a heading vector from.
 *	@returns {DE.Math.Vector} - a unit vector rotated by DEgrees.
 */
-DE.Math.HeadingVec = function(DEgrees){
-	var rads = DE.Math.DEgToRad(DEgrees);
+DE.Math.HeadingVec = function(degrees){
+	var rads = DE.Math.DegToRad(degrees);
 	var x = DE.Math.CleanFloat(Math.cos(rads));
 	var y = DE.Math.CleanFloat(Math.sin(rads));
 	return DE.Math.Vec2d(x,y).Normalize();
@@ -180,18 +180,18 @@ DE.Math.Vector.Normalize = function(vec, scalar) {
 *	@param {DE.Math.Vector} heading - The vector to convert to DEgrees.
 *	@returns {number} DEgrees - The DEgrees representing the rotation of the vector from the world's x-axis.
 */
-DE.Math.Vector.HeadingToDEg = function(heading){
+DE.Math.Vector.HeadingToDeg = function(heading){
 	var world = DE.Math.Vec2d(1,0);		
 	var normalized_heading = DE.Math.Vector.Normalize(heading);
-	var DEgrees = DE.Math.RadToDEg(Math.acos(world.Dot(normalized_heading)));	
+	var degrees = DE.Math.RadToDeg(Math.acos(world.Dot(normalized_heading)));	
 	
 	//dot product returns 0 to pi, fix over 180 problems.
 	if(heading.y < 0)
 	{
-		DEgrees = 360 - DEgrees
+		degrees = 360 - degrees
 	}; 
 	
-	return DEgrees;
+	return degrees;
 };
 
 /** @DEsc Converts a vector from world space to the entities local space.
@@ -222,9 +222,8 @@ DE.Math.Vector.WorldToLocal = function(vec,heading){
 */
 DE.Math.Vector.LocalToWorld = function(vec, heading, pos){	
 	var world = DE.Math.Vec2d(1,0);
-	var DEgrees = DE.Math.DE.Math.Vector.HeadingToDEg(headingVec);
-	
-	var inverse = DE.Math.DE.Math.Vector.WorldToLocal(DE.Math.HeadingVec(-DEgrees),world);	
+	var degrees = DE.Math.Vector.HeadingToDeg(heading);	
+	var inverse = DE.Math.Vector.WorldToLocal(DE.Math.HeadingVec(-degrees),world);	
 	var perp = inverse.Perp();
 
 	var mat = [[inverse.x,perp.x],[inverse.y,perp.y]];
@@ -245,12 +244,12 @@ DE.Math.Vector.MidPoint = function(vec1,vec2){
 	return DE.Vec2d(x, y);
 }
 
-DE.Math.Vector.HeadingToDEgTest = function(){
+DE.Math.Vector.HeadingToDegTest = function(){
 	for (var i = 0; i < 360; i++){
 		var x = DE.Math.CleanFloat(Math.cos(DE.Math.DEgToRad(i)));
 		var y = DE.Math.CleanFloat(Math.sin(DE.Math.DEgToRad(i)));
 		var heading = DE.Math.Vec2d(x,y);
-		var DEg = DE.Math.DE.Math.Vector.HeadingToDEg(heading);
+		var DEg = DE.Math.DE.Math.Vector.HeadingToDeg(heading);
 		if(DEg < i - 0.0001 || DEg > i + 0.0001){
 			console.log("heading:",heading, "got:",DEg," Expected:", i);
 		}

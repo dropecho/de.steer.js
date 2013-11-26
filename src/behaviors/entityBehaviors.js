@@ -9,7 +9,7 @@ DE.Steer = DE.Steer || {};
 DE.Steer.EntityBehaviors = function(){
 	function EntityBehaviors(entity){
 		this.entity = entity;		
-		this.DE_wanDEr_target = DE.Math.Vec2d(); //just makes wanDEr easier to DEal with.
+		this.DE_wander_target = DE.Math.Vec2d(); //just makes wanDEr easier to DEal with.
 	};
 
 	return EntityBehaviors;
@@ -47,14 +47,14 @@ DE.Steer.EntityBehaviors.prototype.Cohese = function(neighbors) {
 	return DE.Steer.Behaviors.Cohese(pos, neighborPositions, max_speed);
 };
 
-DE.Steer.EntityBehaviors.prototype.EvaDE = function(targetEntity) {
+DE.Steer.EntityBehaviors.prototype.Evade = function(targetEntity) {
 	var pos = this.entity.DE_pos(),
 		max_speed = this.entity.DE_max_speed(),
 		target_pos = target.DE_pos(),
 		target_heading = target.DE_heading(),
 		target_vel = target.DE_max_speed(); //this is not correct, but should work for now.
 
-	return DE.Steer.Behaviors.EvaDE(pos, target_pos, max_speed, target_heading, target_vel);
+	return DE.Steer.Behaviors.Evade(pos, target_pos, max_speed, target_heading, target_vel);
 };
 
 DE.Steer.EntityBehaviors.prototype.Flee = function(targetEntity, fleeRadius) {
@@ -105,10 +105,10 @@ DE.Steer.EntityBehaviors.prototype.Seperation = function(neighbors) {
 	return DE.Steer.Behaviors.Seperation(pos, neighborPositions);
 };	
 
-DE.Steer.EntityBehaviors.prototype.WanDEr = function() {
+DE.Steer.EntityBehaviors.prototype.Wander = function() {
 	var pos = this.entity.DE_pos(),
-		target = this.DE_wanDEr_target,
+		target = this.DE_wander_target,
 		heading = this.entity.DE_heading();
 
-	return DE.Steer.Behaviors.WanDEr(pos,target,heading);
+	return DE.Steer.Behaviors.Wander(pos,target,heading);
 };
