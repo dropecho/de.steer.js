@@ -32,7 +32,7 @@ $(document).ready(function(){
   }
 
   var sheep = [];
-  for( var i = 0; i < 3; i++){
+  for( var i = 0; i < 8; i++){
     var pos = DE.Math.Vec2d(DE.Math.Rand(0,PG_WIDTH),DE.Math.Rand(0,PG_HEIGHT));
     actors.addSprite('sheep' + i,{animation: blueCube, posx: pos.x, posy: pos.y, height:TILE_SIZE, width: TILE_SIZE});
     sheep.push($("#sheep"+i));
@@ -56,7 +56,7 @@ $(document).ready(function(){
       var neighbors = DE.Util.RemoveElement(sheepPositions,i);            
       var neighborHeadings = DE.Util.RemoveElement(sheepHeadings,i);            
       
-      var steering = DE.Steer.Behaviors.Flee(sheepPos,playerPos,10,64);            
+      var steering = DE.Steer.Behaviors.Flee(sheepPos,playerPos,10,128);
       steering.Add(DE.Steer.Behaviors.Seperation(sheepPos,neighbors));
       steering.Add(DE.Steer.Behaviors.Cohese(sheepPos,neighbors,10));   
       
